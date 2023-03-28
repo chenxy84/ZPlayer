@@ -1,5 +1,0 @@
-<resources>
-    <string name="app_name">TANGO Player Demo</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_video">VideoActivity</string>
-</resources>
