@@ -1,0 +1,13 @@
+.DS_Store
+
+# android
+projects/android/.gradle
+projects/android/.idea
+projects/android/build
+
+projects/android/app/.cxx
+projects/android/app/.build
+
+
+projects/android/sdk/.cxx
+projects/android/sdk/.build
