@@ -246,8 +246,14 @@ static void aout_close_audio(SDL_Aout *aout)
     SDL_CondSignal(opaque->wakeup_cond);
     SDL_UnlockMutex(opaque->wakeup_mutex);
 
-    SDL_WaitThread(opaque->audio_tid, NULL);
-    opaque->audio_tid = NULL;
+    //TODO call twice when close video, opaque->audio_tid == null cause SDL_WaitThread assert failed
+    if(opaque->audio_tid) {
+        SDL_WaitThread(opaque->audio_tid, NULL);
+        opaque->audio_tid = NULL;
+    } else {
+        ALOGW("OpenSLES: SDL_WaitThread on null opaque->audio_tid");
+    }
+
 
     if (opaque->slPlayItf)
         (*opaque->slPlayItf)->SetPlayState(opaque->slPlayItf, SL_PLAYSTATE_STOPPED);

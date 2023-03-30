@@ -249,6 +249,7 @@ static void aout_set_volume(SDL_Aout *aout, float left_volume, float right_volum
 
 static void aout_close_audio(SDL_Aout *aout)
 {
+
     SDL_Aout_Opaque *opaque = aout->opaque;
 
     SDL_LockMutex(opaque->wakeup_mutex);
@@ -256,9 +257,14 @@ static void aout_close_audio(SDL_Aout *aout)
     SDL_CondSignal(opaque->wakeup_cond);
     SDL_UnlockMutex(opaque->wakeup_mutex);
 
-    SDL_WaitThread(opaque->audio_tid, NULL);
+    //TODO call twice when close video, opaque->audio_tid == null cause SDL_WaitThread assert failed
+    if(opaque->audio_tid) {
+        SDL_WaitThread(opaque->audio_tid, NULL);
+        opaque->audio_tid = NULL;
+    } else {
+        ALOGW("AudioTrack: SDL_WaitThread on null opaque->audio_tid");
+    }
 
-    opaque->audio_tid = NULL;
 }
 
 static int aout_get_audio_session_id(SDL_Aout *aout)
