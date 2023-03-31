@@ -99,7 +99,8 @@ static int android_render_on_yv12(ANativeWindow_Buffer *out_buffer, const SDL_Vo
 static int android_render_rgb_on_rgb(ANativeWindow_Buffer *out_buffer, const SDL_VoutOverlay *overlay, int bpp)
 {
     // SDLTRACE("SDL_VoutAndroid: android_render_rgb_on_rgb(%p)", overlay);
-    assert(overlay->format == SDL_FCC_RV16);
+    //TODO why, android_render_on_rgb8888 case SDL_FCC_RV32
+    //assert(overlay->format == SDL_FCC_RV16); //TODO remove
     assert(overlay->planes == 1);
 
     int min_height = IJKMIN(out_buffer->height, overlay->h);

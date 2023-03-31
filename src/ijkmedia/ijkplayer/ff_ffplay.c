@@ -88,12 +88,12 @@
 
 // FIXME: 9 work around NDKr8e or gcc4.7 bug
 // isnan() may not recognize some double NAN, so we test both double and float
-#if defined(__ANDROID__)
-#ifdef isnan
-#undef isnan
-#endif
-#define isnan(x) (isnan((double)(x)) || isnanf((float)(x)))
-#endif
+//#if defined(__ANDROID__)
+//#ifdef isnan
+//#undef isnan
+//#endif
+//#define isnan(x) (isnan((double)(x)) || isnanf((float)(x)))
+//#endif
 
 #if defined(__ANDROID__)
 #define printf(...) ALOGD(__VA_ARGS__)
@@ -2856,6 +2856,21 @@ static int stream_component_open(FFPlayer *ffp, int stream_index)
         goto fail;
     }
 
+    //android media codec
+#if defined(__ANDROID__)
+    //add by chenxiangyu
+    if(avctx->codec_type == AVMEDIA_TYPE_VIDEO) {
+        switch(avctx->codec_id) {
+            case AV_CODEC_ID_H264: codec = avcodec_find_decoder_by_name("h264_mediacodec");break;
+            case AV_CODEC_ID_H265: codec = avcodec_find_decoder_by_name("hevc_mediacodec");break;
+            case AV_CODEC_ID_VP8: codec = avcodec_find_decoder_by_name("vp8_mediacodec");break;
+            case AV_CODEC_ID_VP9: codec = avcodec_find_decoder_by_name("vp9_mediacodec");break;
+            default:break;
+        }
+        av_log(NULL, AV_LOG_INFO, "android set codec to %s\n", codec->long_name);
+    }
+#endif
+
     avctx->codec_id = codec->id;
     //TODO
 //    if(stream_lowres > av_codec_get_max_lowres(codec)){
@@ -2880,9 +2895,11 @@ static int stream_component_open(FFPlayer *ffp, int stream_index)
         av_dict_set(&opts, "threads", "auto", 0);
     if (stream_lowres)
         av_dict_set_int(&opts, "lowres", stream_lowres, 0);
-    if (avctx->codec_type == AVMEDIA_TYPE_VIDEO || avctx->codec_type == AVMEDIA_TYPE_AUDIO)
-        av_dict_set(&opts, "refcounted_frames", "1", 0);
+    //TODO chenxiangyu not support refcounted_frames
+    //if (avctx->codec_type == AVMEDIA_TYPE_VIDEO || avctx->codec_type == AVMEDIA_TYPE_AUDIO)
+        //av_dict_set(&opts, "refcounted_frames", "1", 0);
     if ((ret = avcodec_open2(avctx, codec, &opts)) < 0) {
+        av_log(NULL, AV_LOG_INFO, "android avcodec_open2 %s failed %d, %s\n", codec->long_name, ret, av_err2str(ret));
         goto fail;
     }
     if ((t = av_dict_get(opts, "", NULL, AV_DICT_IGNORE_SUFFIX))) {

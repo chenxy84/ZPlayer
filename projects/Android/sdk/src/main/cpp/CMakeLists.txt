@@ -33,13 +33,6 @@ set(SOURCE_IJK_MEDIA
         ${SRC_PATH}/ijkmedia/ijkplayer/pipeline/ffpipeline_ffplay.c
         ${SRC_PATH}/ijkmedia/ijkplayer/pipeline/ffpipenode_ffplay_vdec.c
 
-        ${SRC_PATH}/ijkmedia/ijkplayer/android/ffmpeg_api_jni.c
-        ${SRC_PATH}/ijkmedia/ijkplayer/android/ijkplayer_android.c
-        ${SRC_PATH}/ijkmedia/ijkplayer/android/ijkplayer_jni.c
-
-        ${SRC_PATH}/ijkmedia/ijkplayer/android/pipeline/ffpipeline_android.c
-        ${SRC_PATH}/ijkmedia/ijkplayer/android/pipeline/ffpipenode_android_mediacodec_vdec.c
-
         ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/allformats.c
         ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/cJSON.c
 #        ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/ijklas.c
@@ -66,6 +59,15 @@ set(SOURCE_IJK_MEDIA
         ${SRC_PATH}/ijkmedia/ijkplayer/ijkavutil/ijktree.c
         ${SRC_PATH}/ijkmedia/ijkplayer/ijkavutil/ijkfifo.c
         ${SRC_PATH}/ijkmedia/ijkplayer/ijkavutil/ijkstl.cpp
+        )
+
+set(SOURCE_IJK_MEDIA_ANDROID
+        ${SRC_PATH}/ijkmedia/ijkplayer/android/ffmpeg_api_jni.c
+        ${SRC_PATH}/ijkmedia/ijkplayer/android/ijkplayer_android.c
+        ${SRC_PATH}/ijkmedia/ijkplayer/android/ijkplayer_jni.c
+
+        ${SRC_PATH}/ijkmedia/ijkplayer/android/pipeline/ffpipeline_android.c
+        ${SRC_PATH}/ijkmedia/ijkplayer/android/pipeline/ffpipenode_android_mediacodec_vdec.c
         )
 
 set(SOURCE_IJK_J4A
@@ -115,7 +117,9 @@ set(SOURCE_IJK_SDL
 
         ${SRC_PATH}/ijkmedia/ijksdl/ffmpeg/ijksdl_vout_overlay_ffmpeg.c
         ${SRC_PATH}/ijkmedia/ijksdl/ffmpeg/abi_all/image_convert.c
+        )
 
+set(SOURCE_IJK_SDL_ANDROID
         ${SRC_PATH}/ijkmedia/ijksdl/android/android_audiotrack.c
         ${SRC_PATH}/ijkmedia/ijksdl/android/android_nativewindow.c
         ${SRC_PATH}/ijkmedia/ijksdl/android/ijksdl_android_jni.c
@@ -210,7 +214,7 @@ add_library(yuv_static
 add_library(ijkj4a_static
         STATIC
         ${SOURCE_IJK_J4A}
-)
+        )
 
 #find_package(${LIB_PATH}/lib/pkgconfig)
 #pkg_search_module(avutil REQUIRED avutil)
@@ -235,6 +239,7 @@ link_directories(${LIB_PATH}/${CMAKE_ANDROID_ARCH_ABI}/lib)
 add_library(player_sdl
         SHARED
         ${SOURCE_IJK_SDL}
+        ${SOURCE_IJK_SDL_ANDROID}
         )
 
 target_link_libraries(player_sdl
@@ -246,7 +251,8 @@ target_link_libraries(player_sdl
         OpenSLES
         EGL
         GLESv2
-
+        mediandk
+        OpenMAXAL
 #        avutil
 #        swscale
 #        swresample
@@ -261,6 +267,7 @@ add_library(player_sdk
         SHARED
         player_sdk.cpp
         ${SOURCE_IJK_MEDIA}
+        ${SOURCE_IJK_MEDIA_ANDROID}
         ${SOURCE_IJK_PROF}
         ${SOURCE_IJK_SOUNDTOUCH}
         )

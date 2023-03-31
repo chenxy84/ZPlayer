@@ -18,7 +18,9 @@ import com.aliyun.player.source.UrlSource;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.util.Arrays;
 
+import tv.danmaku.ijk.media.player.BuildConfig;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkTimedText;
@@ -716,7 +718,7 @@ public class IjkVideoView extends AbstractPlayerView {
 //                            if(BuildConfig.DEBUG) {
 //                                long now = System.currentTimeMillis();
 //                                if (now - currentTimeMillis > 2000) {
-//                                    Log.i(TAG, mp.getQosInfo().toString());
+//                                    Log.i(TAG, getQosInfo().toString());
 //                                    currentTimeMillis = now;
 //                                }
 //                            }
@@ -772,7 +774,16 @@ public class IjkVideoView extends AbstractPlayerView {
 
     public PlayerQosInfo getQosInfo() {
         if(mPlayer != null) {
-            //return mPlayer.getQosInfo();
+            PlayerQosInfo qosInfo = new PlayerQosInfo();
+            qosInfo.height = mPlayer.getVideoHeight();
+            qosInfo.width = mPlayer.getVideoWidth();
+
+            if(mPlayer.getClass().isInstance(IjkMediaPlayer.class)) {
+                IjkMediaPlayer p = (IjkMediaPlayer) mPlayer;
+                qosInfo.vfps = p.getVideoOutputFramesPerSecond();
+                qosInfo.vdps = p.getVideoDecodeFramesPerSecond();
+            }
+
         }
         return null;
     }

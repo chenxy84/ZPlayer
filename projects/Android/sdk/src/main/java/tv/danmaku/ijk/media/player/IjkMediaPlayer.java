@@ -245,9 +245,9 @@ public final class IjkMediaPlayer extends AbstractMediaPlayer {
          * create it here than in C++.
          */
         native_setup(new WeakReference<IjkMediaPlayer>(this));
-
-        setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-all-videos", 1);
-        setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-sync", 1);
+        //add by chenxiangyu
+//        setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-all-videos", 1);
+//        setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-sync", 1);
     }
 
     private native void _setFrameAtTime(String imgCachePath, long startTime, long endTime, int num, int imgDefinition)

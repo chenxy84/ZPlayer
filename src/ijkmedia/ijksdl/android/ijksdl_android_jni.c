@@ -25,6 +25,7 @@
 #include "ijksdl_android_jni.h"
 
 #include <unistd.h>
+#include <libavcodec/jni.h>
 #include "j4a/class/android/os/Build.h"
 #include "ijksdl_inc_internal_android.h"
 #include "ijksdl_codec_android_mediaformat_java.h"
@@ -205,6 +206,9 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved)
     if ((*vm)->GetEnv(vm, (void**) &env, JNI_VERSION_1_4) != JNI_OK) {
         return -1;
     }
+
+    //add by chenxiangyu
+    av_jni_set_java_vm(vm, NULL);
 
     retval = J4A_LoadAll__catchAll(env);
     JNI_CHECK_RET(retval == 0, env, NULL, NULL, -1);
