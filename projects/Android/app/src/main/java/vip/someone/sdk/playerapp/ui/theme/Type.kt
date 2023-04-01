@@ -1,4 +1,4 @@
-package com.tkmk.sdk.playerapp.ui.theme
+package vip.someone.sdk.playerapp.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

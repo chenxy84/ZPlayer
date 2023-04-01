@@ -523,6 +523,7 @@ static int convert_image(FFPlayer *ffp, AVFrame *src_frame, int64_t src_frame_pt
         goto fail2;
     }
 
+    //TODO chenxiangyu
     //ret = avcodec_encode_video2(img_info->frame_img_codec_ctx, &avpkt, dst_frame, &got_packet);
     ret = avcodec_send_packet(img_info->frame_img_codec_ctx, &avpkt);
     //av_packet_unref(&avpkt);
@@ -597,8 +598,9 @@ static int decoder_decode_frame(FFPlayer *ffp, Decoder *d, AVFrame *frame, AVSub
                         if (ret >= 0) {
                             AVRational tb = (AVRational){1, frame->sample_rate};
                             if (frame->pts != AV_NOPTS_VALUE)
+                                //FIXED by chenxiangyu
                                 //frame->pts = av_rescale_q(frame->pts,  av_codec_get_pkt_timebase(d->avctx), tb);
-                                frame->pts = av_rescale_q(frame->pts,  frame->time_base, tb);
+                                frame->pts = av_rescale_q(frame->pts,  d->avctx->pkt_timebase, tb);
                             else if (d->next_pts != AV_NOPTS_VALUE)
                                 frame->pts = av_rescale_q(d->next_pts, d->next_pts_tb, tb);
                             if (frame->pts != AV_NOPTS_VALUE) {
@@ -734,6 +736,7 @@ static Frame *frame_queue_peek_writable(FrameQueue *f)
 {
     /* wait until we have space to put a new frame */
     SDL_LockMutex(f->mutex);
+    //av_log(NULL, AV_LOG_ERROR, "f->size %d, f->max_size %d", f->size, f->max_size);
     while (f->size >= f->max_size &&
            !f->pktq->abort_request) {
         SDL_CondWait(f->cond, f->mutex);
@@ -916,6 +919,7 @@ static void video_image_display2(FFPlayer *ffp)
             }
         }
         SDL_VoutDisplayYUVOverlay(ffp->vout, vp->bmp);
+        //av_log(NULL, AV_LOG_ERROR, "ffp->stat.vfps = %.2f", ffp->stat.vfps);
         ffp->stat.vfps = SDL_SpeedSamplerAdd(&ffp->vfps_sampler, FFP_SHOW_VFPS_FFPLAY, "vfps[ffplay]");
         if (!ffp->first_video_frame_rendered) {
             ffp->first_video_frame_rendered = 1;
@@ -1416,7 +1420,10 @@ retry:
                     stream_update_pause_l(ffp);
             }
             SDL_UnlockMutex(ffp->is->play_mutex);
+
         }
+
+
 display:
         /* display picture */
         if (!ffp->display_disable && is->force_refresh && is->show_mode == SHOW_MODE_VIDEO && is->pictq.rindex_shown)
@@ -1617,7 +1624,6 @@ static int queue_picture(FFPlayer *ffp, AVFrame *src_frame, double pts, double d
     printf("frame_type=%c pts=%0.3f\n",
            av_get_picture_type_char(src_frame->pict_type), pts);
 #endif
-
     if (!(vp = frame_queue_peek_writable(&is->pictq)))
         return -1;
 
@@ -2220,6 +2226,7 @@ static int ffplay_video_thread(void *arg)
 
     for (;;) {
         ret = get_video_frame(ffp, frame);
+
         if (ret < 0)
             goto the_end;
         if (!ret)
@@ -2322,8 +2329,10 @@ static int ffplay_video_thread(void *arg)
                 is->frame_last_filter_delay = 0;
             tb = av_buffersink_get_time_base(filt_out);
 #endif
+
             duration = (frame_rate.num && frame_rate.den ? av_q2d((AVRational){frame_rate.den, frame_rate.num}) : 0);
             pts = (frame->pts == AV_NOPTS_VALUE) ? NAN : frame->pts * av_q2d(tb);
+            // av_log(NULL, AV_LOG_ERROR, "pts = %lld, pkt_pos = %lld", pts, frame->pkt_pos);
             ret = queue_picture(ffp, frame, pts, duration, frame->pkt_pos, is->viddec.pkt_serial);
             av_frame_unref(frame);
 #if CONFIG_AVFILTER
@@ -2333,12 +2342,15 @@ static int ffplay_video_thread(void *arg)
         if (ret < 0)
             goto the_end;
     }
+
+
  the_end:
 #if CONFIG_AVFILTER
     avfilter_graph_free(&graph);
 #endif
     av_log(NULL, AV_LOG_INFO, "convert image convert_frame_count = %d\n", convert_frame_count);
     av_frame_free(&frame);
+
     return 0;
 }
 
@@ -2834,8 +2846,10 @@ static int stream_component_open(FFPlayer *ffp, int stream_index)
     ret = avcodec_parameters_to_context(avctx, ic->streams[stream_index]->codecpar);
     if (ret < 0)
         goto fail;
-    //TODO
+    //FIXED by chenxiangyu
     //av_codec_set_pkt_timebase(avctx, ic->streams[stream_index]->time_base);
+    avctx->pkt_timebase = ic->streams[stream_index]->time_base;
+    //
 
     codec = avcodec_find_decoder(avctx->codec_id);
 
@@ -2857,7 +2871,7 @@ static int stream_component_open(FFPlayer *ffp, int stream_index)
     }
 
     //android media codec
-#if defined(__ANDROID__)
+#if 0 && defined(__ANDROID__)
     //add by chenxiangyu
     if(avctx->codec_type == AVMEDIA_TYPE_VIDEO) {
         switch(avctx->codec_id) {
@@ -2895,7 +2909,7 @@ static int stream_component_open(FFPlayer *ffp, int stream_index)
         av_dict_set(&opts, "threads", "auto", 0);
     if (stream_lowres)
         av_dict_set_int(&opts, "lowres", stream_lowres, 0);
-    //TODO chenxiangyu not support refcounted_frames
+    //TODO chenxiangyu, not support refcounted_frames
     //if (avctx->codec_type == AVMEDIA_TYPE_VIDEO || avctx->codec_type == AVMEDIA_TYPE_AUDIO)
         //av_dict_set(&opts, "refcounted_frames", "1", 0);
     if ((ret = avcodec_open2(avctx, codec, &opts)) < 0) {
@@ -3790,11 +3804,13 @@ static int video_refresh_thread(void *arg)
     VideoState *is = ffp->is;
     double remaining_time = 0.0;
     while (!is->abort_request) {
+
         if (remaining_time > 0.0)
             av_usleep((int)(int64_t)(remaining_time * 1000000.0));
         remaining_time = REFRESH_RATE;
         if (is->show_mode != SHOW_MODE_NONE && (!is->paused || is->force_refresh))
             video_refresh(ffp, &remaining_time);
+
     }
 
     return 0;
@@ -3914,7 +3930,7 @@ void ffp_global_init()
     avformat_network_init();
 
 //    av_lockmgr_register(lockmgr);
-//TODO chenxy
+//TODO chenxiangyu
     av_log_set_callback(ffp_log_callback_brief);
 
     av_init_packet(&flush_pkt);
@@ -3929,7 +3945,7 @@ void ffp_global_uninit()
         return;
 
 //    av_lockmgr_register(NULL);
-//TODO chenxy
+//TODO chenxiangyu
     // FFP_MERGE: uninit_opts
 
     avformat_network_deinit();
@@ -4000,13 +4016,13 @@ const AVClass ffp_context_class = {
     .version          = LIBAVUTIL_VERSION_INT,
     .child_next       = ffp_context_child_next,
     //.child_class_next = ffp_context_child_class_next,
-    //TODO maybe child_class_iterate
+    //TODO chenxiangyu maybe child_class_iterate
 
 };
 
 static const char *ijk_version_info()
 {
-    //TODO
+    //TODO chenxiangyu
     return "ZPlayer";
 }
 
@@ -4210,7 +4226,7 @@ void ffp_set_option_int(FFPlayer *ffp, int opt_category, const char *name, int64
     av_dict_set_int(dict, name, value, 0);
 }
 
-//TODO
+//TODO chenxiangyu
 //void ffp_set_option_intptr(FFPlayer *ffp, int opt_category, const char *name, uintptr_t value)
 //{
 //    if (!ffp)

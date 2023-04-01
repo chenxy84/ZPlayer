@@ -180,6 +180,7 @@ typedef struct PacketQueue {
 } PacketQueue;
 
 // #define VIDEO_PICTURE_QUEUE_SIZE 3
+//TODO chenxiangyu
 #define VIDEO_PICTURE_QUEUE_SIZE_MIN        (3)
 #define VIDEO_PICTURE_QUEUE_SIZE_MAX        (16)
 #define VIDEO_PICTURE_QUEUE_SIZE_DEFAULT    (VIDEO_PICTURE_QUEUE_SIZE_MIN)
@@ -804,7 +805,7 @@ inline static void ffp_reset_internal(FFPlayer *ffp)
 
     ffp->packet_buffering               = 1;
     ffp->pictq_size                     = VIDEO_PICTURE_QUEUE_SIZE_DEFAULT; // option
-    ffp->max_fps                        = 31; // option
+    ffp->max_fps                        = 121; // option
 
     ffp->videotoolbox                   = 0; // option
     ffp->vtb_max_frame_width            = 0; // option

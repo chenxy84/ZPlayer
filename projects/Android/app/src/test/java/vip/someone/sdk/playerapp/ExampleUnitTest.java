@@ -1,4 +1,4 @@
-package com.tkmk.sdk.playerapp;
+package vip.someone.sdk.playerapp;
 
 import org.junit.Test;
 

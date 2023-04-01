@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.tkmk.sdk.playerapp'
+    namespace 'vip.someone.sdk.playerapp'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.tkmk.sdk.playerapp"
+        applicationId "vip.someone.sdk.playerapp"
         minSdk 26
         targetSdk 33
         versionCode 1

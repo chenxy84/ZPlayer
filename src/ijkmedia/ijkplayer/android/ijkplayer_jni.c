@@ -770,7 +770,7 @@ IjkMediaPlayer_native_finalize(JNIEnv *env, jobject thiz, jobject name, jobject 
     IjkMediaPlayer_release(env, thiz);
 }
 
-//TODO chenxy
+//TODO chenxiangyu
 // NOTE: support to be called from read_thread
 /*
 static int
@@ -1203,7 +1203,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved)
     (*env)->RegisterNatives(env, g_clazz.clazz, g_methods, NELEM(g_methods) );
 
     ijkmp_global_init();
-    //TODO chenxy
+    //TODO chenxiangyu
     //ijkmp_global_set_inject_callback(inject_callback);
 
     FFmpegApi_global_init(env);

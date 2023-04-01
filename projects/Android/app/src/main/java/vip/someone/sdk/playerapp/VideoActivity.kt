@@ -1,4 +1,4 @@
-package com.tkmk.sdk.playerapp
+package vip.someone.sdk.playerapp
 
 import android.os.Bundle
 import android.util.Log
@@ -14,7 +14,7 @@ import androidx.core.view.contains
 import com.aliyun.player.IPlayer
 import com.aliyun.player.bean.InfoCode
 import com.aliyun.player.source.UrlSource
-import com.tkmk.sdk.playerapp.util.HardwareInfoUtils
+import vip.someone.sdk.playerapp.util.HardwareInfoUtils
 import tv.danmaku.ijk.media.player.IMediaPlayer
 import tv.danmaku.ijk.media.player.IMediaPlayer.OnPreparedListener
 import tv.danmaku.ijk.media.player.widget.*

@@ -93,7 +93,7 @@ void ijkmp_global_set_inject_callback(ijk_inject_callback cb)
 
 const char *ijkmp_version()
 {
-    //TODO
+    //TODO chenxiangyu
     return "ZPlayer";
 }
 
@@ -142,7 +142,7 @@ void *ijkmp_set_inject_opaque(IjkMediaPlayer *mp, void *opaque)
     assert(mp);
 
     MPTRACE("%s(%p)\n", __func__, opaque);
-    //TODO chenxy
+    //TODO chenxiangyu
     void *prev_weak_thiz = NULL;//ffp_set_inject_opaque(mp->ffplayer, opaque);
     MPTRACE("%s()=void\n", __func__);
     return prev_weak_thiz;

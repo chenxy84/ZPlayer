@@ -1,4 +1,4 @@
-package com.tkmk.sdk.playerapp.ui.theme
+package vip.someone.sdk.playerapp.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

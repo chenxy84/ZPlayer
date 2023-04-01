@@ -1,4 +1,4 @@
-package com.tkmk.sdk.playerapp.util
+package vip.someone.sdk.playerapp.util
 
 import android.app.ActivityManager
 import android.content.Context

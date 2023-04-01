@@ -246,7 +246,7 @@ static void aout_close_audio(SDL_Aout *aout)
     SDL_CondSignal(opaque->wakeup_cond);
     SDL_UnlockMutex(opaque->wakeup_mutex);
 
-    //TODO call twice when close video, opaque->audio_tid == null cause SDL_WaitThread assert failed
+    //TODO chenxiangyu, call twice when close video, opaque->audio_tid == null cause SDL_WaitThread assert failed
     if(opaque->audio_tid) {
         SDL_WaitThread(opaque->audio_tid, NULL);
         opaque->audio_tid = NULL;

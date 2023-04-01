@@ -1161,6 +1161,7 @@ static int drain_output_buffer_l(JNIEnv *env, IJKFF_Pipenode *node, int64_t time
 
         goto done;
     } else if (output_buffer_index >= 0) {
+        //av_log(NULL, AV_LOG_ERROR, "1 ffp->stat.vdps = %.2f", ffp->stat.vdps);
         ffp->stat.vdps = SDL_SpeedSamplerAdd(&opaque->sampler, FFP_SHOW_VDPS_MEDIACODEC, "vdps[MediaCodec]");
 
         if (dequeue_count)
@@ -1331,6 +1332,7 @@ static int drain_output_buffer2_l(JNIEnv *env, IJKFF_Pipenode *node, int64_t tim
     } else if (output_buffer_index < 0) {
         return 0;
     } else if (output_buffer_index >= 0) {
+        //av_log(NULL, AV_LOG_ERROR, "2 ffp->stat.vdps = %.2f", ffp->stat.vdps);
         ffp->stat.vdps = SDL_SpeedSamplerAdd(&opaque->sampler, FFP_SHOW_VDPS_MEDIACODEC, "vdps[MediaCodec]");
 
         if (dequeue_count)
