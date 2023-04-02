@@ -1,13 +1,11 @@
 cmake_minimum_required(VERSION 3.18)
 project("player_sdk")
 
-message("Build player_sdk for ${CMAKE_ANDROID_ARCH_ABI}")
-
-set(ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../../../../..)
+set(ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/..)
 message("Project root path = ${ROOT_PATH}")
 
 set(SRC_PATH ${ROOT_PATH}/src)
-set(LIB_PATH ${ROOT_PATH}/../third-party-libs/dist/Android)
+set(LIB_PATH ${ROOT_PATH}/../third-party-libs/dist/Darwin/macOS_x86_64)
 
 include_directories(
         ${SRC_PATH}
@@ -18,9 +16,9 @@ include_directories(
         ${SRC_PATH}/ijkmedia/ijkyuv/include
         ${SRC_PATH}/ijkmedia/ijksoundtouch
         ${SRC_PATH}/ijkmedia/ijksoundtouch/include
-        ${SRC_PATH}/ijkprof/android-ndk-profiler-dummy/jni
-        ${LIB_PATH}/${CMAKE_ANDROID_ARCH_ABI}/include
+        ${LIB_PATH}/include
         )
+
 
 set(SOURCE_IJK_MEDIA
         ${SRC_PATH}/ijkmedia/ijkplayer/ff_cmdutils.c
@@ -61,35 +59,6 @@ set(SOURCE_IJK_MEDIA
         ${SRC_PATH}/ijkmedia/ijkplayer/ijkavutil/ijkstl.cpp
         )
 
-set(SOURCE_IJK_MEDIA_ANDROID
-        ${SRC_PATH}/ijkmedia/ijkplayer/android/ffmpeg_api_jni.c
-        ${SRC_PATH}/ijkmedia/ijkplayer/android/ijkplayer_android.c
-        ${SRC_PATH}/ijkmedia/ijkplayer/android/ijkplayer_jni.c
-
-        ${SRC_PATH}/ijkmedia/ijkplayer/android/pipeline/ffpipeline_android.c
-        ${SRC_PATH}/ijkmedia/ijkplayer/android/pipeline/ffpipenode_android_mediacodec_vdec.c
-        )
-
-set(SOURCE_IJK_J4A
-        ${SRC_PATH}/ijkmedia/ijkj4a/j4a/j4a_allclasses.c
-        ${SRC_PATH}/ijkmedia/ijkj4a/j4a/j4a_base.c
-        ${SRC_PATH}/ijkmedia/ijkj4a/j4a/class/android/media/AudioTrack.c
-        ${SRC_PATH}/ijkmedia/ijkj4a/j4a/class/android/media/MediaCodec.c
-        ${SRC_PATH}/ijkmedia/ijkj4a/j4a/class/android/media/MediaFormat.c
-        ${SRC_PATH}/ijkmedia/ijkj4a/j4a/class/android/media/PlaybackParams.c
-        ${SRC_PATH}/ijkmedia/ijkj4a/j4a/class/android/os/Build.c
-        ${SRC_PATH}/ijkmedia/ijkj4a/j4a/class/android/os/Bundle.c
-        ${SRC_PATH}/ijkmedia/ijkj4a/j4a/class/java/nio/Buffer.c
-        ${SRC_PATH}/ijkmedia/ijkj4a/j4a/class/java/nio/ByteBuffer.c
-        ${SRC_PATH}/ijkmedia/ijkj4a/j4a/class/java/util/ArrayList.c
-        ${SRC_PATH}/ijkmedia/ijkj4a/j4a/class/tv/danmaku/ijk/media/player/misc/IMediaDataSource.c
-        ${SRC_PATH}/ijkmedia/ijkj4a/j4a/class/tv/danmaku/ijk/media/player/misc/IAndroidIO.c
-        ${SRC_PATH}/ijkmedia/ijkj4a/j4a/class/tv/danmaku/ijk/media/player/IjkMediaPlayer.c
-
-        ${SRC_PATH}/ijkmedia/ijkj4a/j4au/class/android/media/AudioTrack.util.c
-        ${SRC_PATH}/ijkmedia/ijkj4a/j4au/class/java/nio/ByteBuffer.util.c
-        )
-
 set(SOURCE_IJK_SDL
         ${SRC_PATH}/ijkmedia/ijksdl/ijksdl_aout.c
         ${SRC_PATH}/ijkmedia/ijksdl/ijksdl_audio.c
@@ -105,37 +74,6 @@ set(SOURCE_IJK_SDL
 
         ${SRC_PATH}/ijkmedia/ijksdl/ffmpeg/ijksdl_vout_overlay_ffmpeg.c
         ${SRC_PATH}/ijkmedia/ijksdl/ffmpeg/abi_all/image_convert.c
-        )
-
-set(SOURCE_IJK_SDL_ANDROID
-        ${SRC_PATH}/ijkmedia/ijksdl/ijksdl_extra_log.c
-        ${SRC_PATH}/ijkmedia/ijksdl/gles2/color.c
-        ${SRC_PATH}/ijkmedia/ijksdl/gles2/common.c
-        ${SRC_PATH}/ijkmedia/ijksdl/gles2/renderer.c
-        ${SRC_PATH}/ijkmedia/ijksdl/gles2/renderer_rgb.c
-        ${SRC_PATH}/ijkmedia/ijksdl/gles2/renderer_yuv420p.c
-        ${SRC_PATH}/ijkmedia/ijksdl/gles2/renderer_yuv444p10le.c
-        ${SRC_PATH}/ijkmedia/ijksdl/gles2/shader.c
-        ${SRC_PATH}/ijkmedia/ijksdl/gles2/fsh/rgb.fsh.c
-        ${SRC_PATH}/ijkmedia/ijksdl/gles2/fsh/yuv420p.fsh.c
-        ${SRC_PATH}/ijkmedia/ijksdl/gles2/fsh/yuv444p10le.fsh.c
-        ${SRC_PATH}/ijkmedia/ijksdl/gles2/vsh/mvp.vsh.c
-
-        ${SRC_PATH}/ijkmedia/ijksdl/android/android_audiotrack.c
-        ${SRC_PATH}/ijkmedia/ijksdl/android/android_nativewindow.c
-        ${SRC_PATH}/ijkmedia/ijksdl/android/ijksdl_android_jni.c
-        ${SRC_PATH}/ijkmedia/ijksdl/android/ijksdl_aout_android_audiotrack.c
-        ${SRC_PATH}/ijkmedia/ijksdl/android/ijksdl_aout_android_opensles.c
-        ${SRC_PATH}/ijkmedia/ijksdl/android/ijksdl_codec_android_mediacodec_dummy.c
-        ${SRC_PATH}/ijkmedia/ijksdl/android/ijksdl_codec_android_mediacodec_internal.c
-        ${SRC_PATH}/ijkmedia/ijksdl/android/ijksdl_codec_android_mediacodec_java.c
-        ${SRC_PATH}/ijkmedia/ijksdl/android/ijksdl_codec_android_mediacodec.c
-        ${SRC_PATH}/ijkmedia/ijksdl/android/ijksdl_codec_android_mediadef.c
-        ${SRC_PATH}/ijkmedia/ijksdl/android/ijksdl_codec_android_mediaformat_java.c
-        ${SRC_PATH}/ijkmedia/ijksdl/android/ijksdl_codec_android_mediaformat.c
-        ${SRC_PATH}/ijkmedia/ijksdl/android/ijksdl_vout_android_nativewindow.c
-        ${SRC_PATH}/ijkmedia/ijksdl/android/ijksdl_vout_android_surface.c
-        ${SRC_PATH}/ijkmedia/ijksdl/android/ijksdl_vout_overlay_android_mediacodec.c
         )
 
 set(SOURCE_IJK_YUV
@@ -166,25 +104,6 @@ set(SOURCE_IJK_YUV
         ${SRC_PATH}/ijkmedia/ijkyuv/source/video_common.cc
 )
 
-if("${CMAKE_ANDROID_ARCH_ABI}" STREQUAL "armeabi-v7a")
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DLIBYUV_NEON")
-        set(SOURCE_IJK_YUV
-                ${SOURCE_IJK_YUV}
-                ${SRC_PATH}/ijkmedia/ijkyuv/source/compare_neon.cc
-                ${SRC_PATH}/ijkmedia/ijkyuv/source/rotate_neon.cc
-                ${SRC_PATH}/ijkmedia/ijkyuv/source/row_neon.cc
-                ${SRC_PATH}/ijkmedia/ijkyuv/source/scale_neon.cc
-                )
-elseif("${CMAKE_ANDROID_ARCH_ABI}" STREQUAL "arm64-v8a")
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DLIBYUV_NEON")
-        set(SOURCE_IJK_YUV
-                ${SOURCE_IJK_YUV}
-                ${SRC_PATH}/ijkmedia/ijkyuv/source/compare_neon64.cc
-                ${SRC_PATH}/ijkmedia/ijkyuv/source/rotate_neon64.cc
-                ${SRC_PATH}/ijkmedia/ijkyuv/source/row_neon64.cc
-                ${SRC_PATH}/ijkmedia/ijkyuv/source/scale_neon64.cc
-                )
-endif()
 
 set(SOURCE_IJK_SOUNDTOUCH
         ${SRC_PATH}/ijkmedia/ijksoundtouch/source/SoundTouch/AAFilter.cpp
@@ -204,76 +123,29 @@ set(SOURCE_IJK_SOUNDTOUCH
         ${SRC_PATH}/ijkmedia/ijksoundtouch/ijksoundtouch_wrap.cpp
 )
 
-set(SOURCE_IJK_PROF
-        ${SRC_PATH}/ijkprof/android-ndk-profiler-dummy/jni/prof.c)
+link_directories(${LIB_PATH}/lib)
 
 add_library(yuv_static
         STATIC
         ${SOURCE_IJK_YUV}
 )
 
-add_library(ijkj4a_static
-        STATIC
-        ${SOURCE_IJK_J4A}
-        )
-
-#find_package(${LIB_PATH}/lib/pkgconfig)
-#pkg_search_module(avutil REQUIRED avutil)
-#pkg_search_module(swscale REQUIRED swscale)
-#pkg_search_module(swresample REQUIRED swresample)
-#pkg_search_module(avcodec REQUIRED avcodec)
-#pkg_search_module(avformat REQUIRED avformat)
-#pkg_search_module(avfilter REQUIRED avfilter)
-#
-#pkg_search_module(ssl REQUIRED ssl)
-#pkg_search_module(crypto REQUIRED crypto)
-
-#add_library(ffmpeg SHARED IMPORTED)
-#set_target_properties(
-#        ffmpeg_shared
-#        PROPERTIES IMPORTED_LOCATION
-#        ${LIB_PATH}/${CMAKE_ANDROID_ARCH_ABI}/lib/libffmpeg.so
-#)
-
-link_directories(${LIB_PATH}/${CMAKE_ANDROID_ARCH_ABI}/lib)
-
 add_library(player_sdl
-        SHARED
+        STATIC
         ${SOURCE_IJK_SDL}
-        ${SOURCE_IJK_SDL_ANDROID}
         )
 
 target_link_libraries(player_sdl
         ffmpeg
-        ijkj4a_static
         yuv_static
-        log
-        android
-        OpenSLES
-        EGL
-        GLESv2
-        mediandk
-        OpenMAXAL
-#        avutil
-#        swscale
-#        swresample
-#        avcodec
-#        avformat
-#        avfilter
-#        ssl
-#        crypto
         )
 
 add_library(player_sdk
-        SHARED
-        player_sdk.cpp
+        STATIC
         ${SOURCE_IJK_MEDIA}
-        ${SOURCE_IJK_MEDIA_ANDROID}
-        ${SOURCE_IJK_PROF}
-        ${SOURCE_IJK_SOUNDTOUCH}
         )
 
 target_link_libraries(player_sdk
         ffmpeg
         player_sdl
-        log )
+        )

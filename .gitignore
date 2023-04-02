@@ -11,3 +11,7 @@ projects/android/app/.build
 
 projects/android/sdk/.cxx
 projects/android/sdk/.build
+
+
+projects/iOS/IJKMediaPlayer/IJKMediaPlayer.xcodeproj/project.xcworkspace/xcuserdata/*
+projects/iOS/IJKMediaPlayer/IJKMediaPlayer.xcodeproj/xcuserdata/*
