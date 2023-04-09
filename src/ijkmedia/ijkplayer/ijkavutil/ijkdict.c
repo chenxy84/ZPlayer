@@ -27,6 +27,8 @@
 #include <ctype.h>
 #include <inttypes.h>
 
+#include <libavutil/dict.h>
+
 struct IjkAVDictionary {
     int count;
     IjkAVDictionaryEntry *elems;

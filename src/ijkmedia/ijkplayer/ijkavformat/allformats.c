@@ -39,16 +39,19 @@
         ijkav_register_##x##_protocol(&ijkimp_ff_##x##_protocol, sizeof(URLProtocol));  \
     }
 
-static struct AVInputFormat *ijkav_find_input_format(const char *iformat_name)
+//FIXED by chenxiangyu
+static const AVInputFormat *ijkav_find_input_format(const char *iformat_name)
 {
-    AVInputFormat *fmt = NULL;
+    void *ifmt_opaque = NULL;
+    const AVInputFormat *ifmt = NULL;
     if (!iformat_name)
         return NULL;
-    while ((fmt = av_iformat_next(fmt))) {
-        if (!fmt->name)
+    
+    while ((ifmt = av_demuxer_iterate(&ifmt_opaque))) {
+        if (!ifmt->name)
             continue;
-        if (!strcmp(iformat_name, fmt->name))
-            return fmt;
+        if (!strcmp(iformat_name, ifmt->name))
+            return ifmt;
     }
     return NULL;
 }
@@ -59,7 +62,9 @@ static void ijkav_register_input_format(AVInputFormat *iformat)
         av_log(NULL, AV_LOG_WARNING, "skip     demuxer : %s (duplicated)\n", iformat->name);
     } else {
         av_log(NULL, AV_LOG_INFO,    "register demuxer : %s\n", iformat->name);
-        av_register_input_format(iformat);
+        
+        //FIXED by chenxiangyu Deprecate
+        //av_register_input_format(iformat);
     }
 }
 
