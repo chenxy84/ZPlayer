@@ -1,17 +1,23 @@
 .DS_Store
 
-# android
-projects/android/.gradle
-projects/android/.idea
-projects/android/build
+# Android
+projects/Android/.gradle/*
+projects/Android/.idea/*
+projects/Android/build
 
-projects/android/app/.cxx
-projects/android/app/.build
-
-
-projects/android/sdk/.cxx
-projects/android/sdk/.build
+projects/Android/app/.cxx
+projects/Android/app/.build
 
 
+projects/Android/sdk/.cxx
+projects/Android/sdk/.build
+
+
+#iOS
 projects/iOS/IJKMediaPlayer/IJKMediaPlayer.xcodeproj/project.xcworkspace/xcuserdata/*
 projects/iOS/IJKMediaPlayer/IJKMediaPlayer.xcodeproj/xcuserdata/*
+
+
+#Qt
+build/
+projects/Qt/build/
