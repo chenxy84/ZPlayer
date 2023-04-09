@@ -19,7 +19,8 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-        ${TS_FILES}
+        player_controller.cpp
+        player_controller.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

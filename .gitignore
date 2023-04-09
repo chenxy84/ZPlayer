@@ -21,3 +21,4 @@ projects/iOS/IJKMediaPlayer/IJKMediaPlayer.xcodeproj/xcuserdata/*
 #Qt
 build/
 projects/Qt/build/
+projects/Qt/CMakeLists.txt.user
