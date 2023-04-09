@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		289AA0EC29E312210029A9FE /* IJKFFMonitor.h in Headers */ = {isa = PBXBuildFile; fileRef = E6DBD3871C8941EB0058E4FB /* IJKFFMonitor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		289AA0ED29E312A80029A9FE /* ijkiourl.h in Headers */ = {isa = PBXBuildFile; fileRef = 54CF8A321E1526F800309DD5 /* ijkiourl.h */; };
 		33BA6FBF254BC4D7004EB9F2 /* ijklas.c in Sources */ = {isa = PBXBuildFile; fileRef = B4449BD5250095700074CEDC /* ijklas.c */; };
 		33BA6FC0254BC4D9004EB9F2 /* ijklas.h in Headers */ = {isa = PBXBuildFile; fileRef = B4449BD4250095700074CEDC /* ijklas.h */; };
 		33BA6FC1254BC4DC004EB9F2 /* cJSON.c in Sources */ = {isa = PBXBuildFile; fileRef = B417F8E124F7C56C00D159BB /* cJSON.c */; };
@@ -108,8 +110,6 @@
 		5450B01B1E63EA4300568494 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E653C6F21BCE5A750016835A /* libavutil.a */; };
 		5450B01C1E63EA4300568494 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E653C6F31BCE5A750016835A /* libswresample.a */; };
 		5450B01D1E63EA4300568494 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E653C6F41BCE5A750016835A /* libswscale.a */; };
-		5450B01F1E63EA4300568494 /* IJKFFMonitor.h in Headers */ = {isa = PBXBuildFile; fileRef = E6DBD3871C8941EB0058E4FB /* IJKFFMonitor.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5450B0201E63EA4300568494 /* ijkiourl.h in Headers */ = {isa = PBXBuildFile; fileRef = 54CF8A321E1526F800309DD5 /* ijkiourl.h */; };
 		5450B0211E63EA4300568494 /* IJKFFMoviePlayerController.h in Headers */ = {isa = PBXBuildFile; fileRef = E66F8DE517EFD9C300354D80 /* IJKFFMoviePlayerController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5450B0221E63EA4300568494 /* IJKSDLHudViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = E68B7AC31C1E7F20001DE241 /* IJKSDLHudViewController.h */; };
 		5450B0231E63EA4300568494 /* IJKFFOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = E62139BC180FA89A00553533 /* IJKFFOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -974,8 +974,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5450B01F1E63EA4300568494 /* IJKFFMonitor.h in Headers */,
-				5450B0201E63EA4300568494 /* ijkiourl.h in Headers */,
+				289AA0EC29E312210029A9FE /* IJKFFMonitor.h in Headers */,
 				5450B0211E63EA4300568494 /* IJKFFMoviePlayerController.h in Headers */,
 				5450B0221E63EA4300568494 /* IJKSDLHudViewController.h in Headers */,
 				5450B0231E63EA4300568494 /* IJKFFOptions.h in Headers */,
@@ -987,6 +986,7 @@
 				549385C41E640456001AE08D /* IJKMediaFrameworkWithSSL.h in Headers */,
 				5450B0291E63EA4300568494 /* ff_ffplay_options.h in Headers */,
 				5450B02B1E63EA4300568494 /* IJKKVOController.h in Headers */,
+				289AA0ED29E312A80029A9FE /* ijkiourl.h in Headers */,
 				5450B02C1E63EA4300568494 /* IJKNotificationManager.h in Headers */,
 				5450B02D1E63EA4300568494 /* ijkthreadpool.h in Headers */,
 				5450B02E1E63EA4300568494 /* ijkiomanager.h in Headers */,
@@ -1061,7 +1061,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5450B0401E63EA4300568494 /* Build configuration list for PBXNativeTarget "IJKMediaFrameworkWithSSL" */;
 			buildPhases = (
-				5450AFC21E63EA4300568494 /* ijkversion.h */,
 				5450AFC31E63EA4300568494 /* Sources */,
 				5450B0171E63EA4300568494 /* Frameworks */,
 				5450B01E1E63EA4300568494 /* Headers */,
@@ -1176,20 +1175,6 @@
 
 /* Begin PBXShellScriptBuildPhase section */
 		544E73271D93DEF4005CA5D9 /* ijkversion.h */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = ijkversion.h;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "sh \"${PROJECT_DIR}/../../ijkmedia/ijkplayer/version.sh\" \"${PROJECT_DIR}/../../ijkmedia/ijkplayer\" \"ijkversion.h\"";
-		};
-		5450AFC21E63EA4300568494 /* ijkversion.h */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

@@ -22,3 +22,4 @@ projects/iOS/IJKMediaPlayer/IJKMediaPlayer.xcodeproj/xcuserdata/*
 build/
 projects/Qt/build/
 projects/Qt/CMakeLists.txt.user
+projects/Qt/mainwindow.ui.autosave
