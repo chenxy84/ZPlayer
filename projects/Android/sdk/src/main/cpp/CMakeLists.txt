@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.18)
 project("player_sdk")
-
+set(CMAKE_SKIP_BUILD_RPATH TRUE)
 message("Build player_sdk for ${CMAKE_ANDROID_ARCH_ABI}")
 
 set(ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../../../../..)
@@ -230,11 +230,11 @@ add_library(ijkj4a_static
 
 #add_library(ffmpeg SHARED IMPORTED)
 #set_target_properties(
-#        ffmpeg_shared
+#        ffmpeg
 #        PROPERTIES IMPORTED_LOCATION
 #        ${LIB_PATH}/${CMAKE_ANDROID_ARCH_ABI}/lib/libffmpeg.so
 #)
-
+#find_library(ffmpeg NAMES libffmpeg.so PATH ${LIB_PATH}/${CMAKE_ANDROID_ARCH_ABI}/lib/)
 link_directories(${LIB_PATH}/${CMAKE_ANDROID_ARCH_ABI}/lib)
 
 add_library(player_sdl

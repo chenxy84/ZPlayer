@@ -26,7 +26,8 @@ val TAG = "MainActivity"
 val videos = listOf(
 
     Video("Local test",""),
-    Video("V 1","/sdcard/test.mp4"),
+    Video("","/sdcard/test1.mp4"),
+    Video("","/sdcard/test1.webm"),
 )
 
 class MainActivity : ComponentActivity() {
