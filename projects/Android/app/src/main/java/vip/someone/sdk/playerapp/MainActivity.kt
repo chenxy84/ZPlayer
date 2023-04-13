@@ -28,6 +28,7 @@ val videos = listOf(
     Video("Local test",""),
     Video("","/sdcard/test1.mp4"),
     Video("","/sdcard/test1.webm"),
+    Video("","/sdcard/test_dolby_vision.mp4"),
 )
 
 class MainActivity : ComponentActivity() {

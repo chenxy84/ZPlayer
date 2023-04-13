@@ -234,7 +234,9 @@ add_library(ijkj4a_static
 #        PROPERTIES IMPORTED_LOCATION
 #        ${LIB_PATH}/${CMAKE_ANDROID_ARCH_ABI}/lib/libffmpeg.so
 #)
-#find_library(ffmpeg NAMES libffmpeg.so PATH ${LIB_PATH}/${CMAKE_ANDROID_ARCH_ABI}/lib/)
+#
+#find_library(libffmpeg NAMES ffmpeg PATHS ${LIB_PATH}/${CMAKE_ANDROID_ARCH_ABI}/lib/)
+
 link_directories(${LIB_PATH}/${CMAKE_ANDROID_ARCH_ABI}/lib)
 
 add_library(player_sdl

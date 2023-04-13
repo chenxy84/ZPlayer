@@ -54,38 +54,38 @@ dependencies {
     api 'com.aliyun.sdk.android:AliyunPlayer:5.4.8.0-full'
 }
 
-publishing {
-    publications {
-        Production(MavenPublication) {
-            groupId = "com.tkmk.sdk"
-            artifactId = "playersdk"
-            version = "0.3.0"
-            artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
-            pom.withXml {
-                def dependenciesNode = asNode().appendNode('dependencies')
-                configurations.implementation.allDependencies.each {
-                    if (it.group != null && (it.name != null && "unspecified" != it.name) && it.version != null) {
-                        // println it.toString()
-                        def dependencyNode = dependenciesNode.appendNode('dependency')
-                        dependencyNode.appendNode('groupId', it.group)
-                        dependencyNode.appendNode('artifactId', it.name)
-                        dependencyNode.appendNode('version', it.version)
-                        dependencyNode.appendNode('scope', 'implementation')
-                    }
-                }
-            }
-        }
-    }
-
-    repositories {
-        maven {
-            url = "https://nexus.tango.cn/repository/maven-releases/"
-            credentials {
-                username = "tangosn"
-                password = "R5wnogfrJhivt2Jp"
-            }
-        }
-
-
-    }
-}
+//publishing {
+//    publications {
+//        Production(MavenPublication) {
+//            groupId = "vip.someone.sdk"
+//            artifactId = "playersdk"
+//            version = "0.0.1"
+//            artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+//            pom.withXml {
+//                def dependenciesNode = asNode().appendNode('dependencies')
+//                configurations.implementation.allDependencies.each {
+//                    if (it.group != null && (it.name != null && "unspecified" != it.name) && it.version != null) {
+//                        // println it.toString()
+//                        def dependencyNode = dependenciesNode.appendNode('dependency')
+//                        dependencyNode.appendNode('groupId', it.group)
+//                        dependencyNode.appendNode('artifactId', it.name)
+//                        dependencyNode.appendNode('version', it.version)
+//                        dependencyNode.appendNode('scope', 'implementation')
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    repositories {
+//        maven {
+//            url = "https://nexus.tango.cn/repository/maven-releases/"
+//            credentials {
+//                username = "tangosn"
+//                password = "R5wnogfrJhivt2Jp"
+//            }
+//        }
+//
+//
+//    }
+//}
