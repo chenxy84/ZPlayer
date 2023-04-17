@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2823D00F29ECFA2A00326EFE /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2823D00929ECFA0500326EFE /* libavcodec.a */; };
+		2823D01029ECFA3E00326EFE /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2823D00829ECFA0400326EFE /* libavfilter.a */; };
+		2823D01129ECFA5500326EFE /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2823D00E29ECFA0600326EFE /* libavformat.a */; };
+		2823D01229ECFA7D00326EFE /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2823D00729ECFA0400326EFE /* libavutil.a */; };
+		2823D01529ECFABB00326EFE /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2823D00B29ECFA0500326EFE /* libswresample.a */; };
+		2823D01629ECFADA00326EFE /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2823D00629ECFA0400326EFE /* libswscale.a */; };
+		2823D01729ECFAEC00326EFE /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2823D00A29ECFA0500326EFE /* libx264.a */; };
+		2823D01929ECFB0100326EFE /* libiconv.2.4.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2823D01829ECFB0100326EFE /* libiconv.2.4.0.tbd */; };
 		289AA0EC29E312210029A9FE /* IJKFFMonitor.h in Headers */ = {isa = PBXBuildFile; fileRef = E6DBD3871C8941EB0058E4FB /* IJKFFMonitor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		289AA30F29E317530029A9FE /* ff_fferror.h in Headers */ = {isa = PBXBuildFile; fileRef = 289AA0F229E317520029A9FE /* ff_fferror.h */; };
 		289AA31029E317530029A9FE /* ff_fferror.h in Headers */ = {isa = PBXBuildFile; fileRef = 289AA0F229E317520029A9FE /* ff_fferror.h */; };
@@ -24,7 +32,6 @@
 		289AA32E29E317530029A9FE /* cJSON.c in Sources */ = {isa = PBXBuildFile; fileRef = 289AA10229E317520029A9FE /* cJSON.c */; };
 		289AA33729E317530029A9FE /* allformats.c in Sources */ = {isa = PBXBuildFile; fileRef = 289AA10729E317520029A9FE /* allformats.c */; };
 		289AA33829E317530029A9FE /* allformats.c in Sources */ = {isa = PBXBuildFile; fileRef = 289AA10729E317520029A9FE /* allformats.c */; };
-		289AA33A29E317530029A9FE /* ijklivehook.c in Sources */ = {isa = PBXBuildFile; fileRef = 289AA10829E317520029A9FE /* ijklivehook.c */; };
 		289AA33D29E317530029A9FE /* ijkiourl.h in Headers */ = {isa = PBXBuildFile; fileRef = 289AA10A29E317520029A9FE /* ijkiourl.h */; };
 		289AA33E29E317530029A9FE /* ijkiourl.h in Headers */ = {isa = PBXBuildFile; fileRef = 289AA10A29E317520029A9FE /* ijkiourl.h */; };
 		289AA33F29E317530029A9FE /* ijkiomanager.h in Headers */ = {isa = PBXBuildFile; fileRef = 289AA10B29E317520029A9FE /* ijkiomanager.h */; };
@@ -350,6 +357,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2823D00629ECFA0400326EFE /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = "../../../../third-party-libs/dist/Darwin/iOS_fat/lib/libswscale.a"; sourceTree = "<group>"; };
+		2823D00729ECFA0400326EFE /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = "../../../../third-party-libs/dist/Darwin/iOS_fat/lib/libavutil.a"; sourceTree = "<group>"; };
+		2823D00829ECFA0400326EFE /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = "../../../../third-party-libs/dist/Darwin/iOS_fat/lib/libavfilter.a"; sourceTree = "<group>"; };
+		2823D00929ECFA0500326EFE /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = "../../../../third-party-libs/dist/Darwin/iOS_fat/lib/libavcodec.a"; sourceTree = "<group>"; };
+		2823D00A29ECFA0500326EFE /* libx264.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libx264.a; path = "../../../../third-party-libs/dist/Darwin/iOS_fat/lib/libx264.a"; sourceTree = "<group>"; };
+		2823D00B29ECFA0500326EFE /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = "../../../../third-party-libs/dist/Darwin/iOS_fat/lib/libswresample.a"; sourceTree = "<group>"; };
+		2823D00C29ECFA0500326EFE /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "../../../../third-party-libs/dist/Darwin/iOS_fat/lib/libssl.a"; sourceTree = "<group>"; };
+		2823D00D29ECFA0500326EFE /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "../../../../third-party-libs/dist/Darwin/iOS_fat/lib/libcrypto.a"; sourceTree = "<group>"; };
+		2823D00E29ECFA0600326EFE /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = "../../../../third-party-libs/dist/Darwin/iOS_fat/lib/libavformat.a"; sourceTree = "<group>"; };
+		2823D01329ECFA9000326EFE /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/usr/lib/libiconv.tbd; sourceTree = DEVELOPER_DIR; };
+		2823D01429ECFA9C00326EFE /* libiconv.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.2.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/usr/lib/libiconv.2.tbd; sourceTree = DEVELOPER_DIR; };
+		2823D01829ECFB0100326EFE /* libiconv.2.4.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.2.4.0.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/usr/lib/libiconv.2.4.0.tbd; sourceTree = DEVELOPER_DIR; };
 		289AA0F229E317520029A9FE /* ff_fferror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ff_fferror.h; sourceTree = "<group>"; };
 		289AA0F429E317520029A9FE /* ijkavformat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ijkavformat.h; sourceTree = "<group>"; };
 		289AA0F529E317520029A9FE /* ijkurlhook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ijkurlhook.c; sourceTree = "<group>"; };
@@ -549,9 +568,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2823D01929ECFB0100326EFE /* libiconv.2.4.0.tbd in Frameworks */,
+				2823D01529ECFABB00326EFE /* libswresample.a in Frameworks */,
 				5450B0471E63EABC00568494 /* libz.tbd in Frameworks */,
+				2823D01029ECFA3E00326EFE /* libavfilter.a in Frameworks */,
 				5450B0451E63EAB700568494 /* libcrypto.a in Frameworks */,
+				2823D01129ECFA5500326EFE /* libavformat.a in Frameworks */,
+				2823D01229ECFA7D00326EFE /* libavutil.a in Frameworks */,
+				2823D01629ECFADA00326EFE /* libswscale.a in Frameworks */,
+				2823D01729ECFAEC00326EFE /* libx264.a in Frameworks */,
 				5450B0461E63EAB700568494 /* libssl.a in Frameworks */,
+				2823D00F29ECFA2A00326EFE /* libavcodec.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -941,6 +968,18 @@
 		E6903EBB17EAF6C500CFD954 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2823D01829ECFB0100326EFE /* libiconv.2.4.0.tbd */,
+				2823D01429ECFA9C00326EFE /* libiconv.2.tbd */,
+				2823D01329ECFA9000326EFE /* libiconv.tbd */,
+				2823D00929ECFA0500326EFE /* libavcodec.a */,
+				2823D00829ECFA0400326EFE /* libavfilter.a */,
+				2823D00E29ECFA0600326EFE /* libavformat.a */,
+				2823D00729ECFA0400326EFE /* libavutil.a */,
+				2823D00D29ECFA0500326EFE /* libcrypto.a */,
+				2823D00C29ECFA0500326EFE /* libssl.a */,
+				2823D00B29ECFA0500326EFE /* libswresample.a */,
+				2823D00629ECFA0400326EFE /* libswscale.a */,
+				2823D00A29ECFA0500326EFE /* libx264.a */,
 				5450AF8F1E63E59800568494 /* libz.tbd */,
 				5450AF8B1E63E59300568494 /* libcrypto.a */,
 				5450AF8C1E63E59300568494 /* libssl.a */,
@@ -1344,7 +1383,6 @@
 				289AA6F529E31EA40029A9FE /* IJKSDLAudioKit.m in Sources */,
 				289AA6CD29E31B9E0029A9FE /* ijkplayer_ios.m in Sources */,
 				289AA60C29E317550029A9FE /* renderer_yuv444p10le.c in Sources */,
-				289AA33A29E317530029A9FE /* ijklivehook.c in Sources */,
 				289AA60A29E317550029A9FE /* ijksdl_audio.c in Sources */,
 				289AA6B929E31B9E0029A9FE /* IJKVideoToolBoxAsync.m in Sources */,
 				5450AFE01E63EA4300568494 /* IJKMediaUtils.m in Sources */,
@@ -1521,9 +1559,9 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					../build/universal/include,
 					IJKMediaPlayer/ijkmedia,
 					"\"$(SRCROOT)/../../../src/ijkmedia\"",
+					"\"$(SRCROOT)/../../../../third-party-libs/dist/Darwin/iOS_fat/include\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/IJKMediaFrameworkWithSSL/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1531,7 +1569,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../build/universal/lib\"",
+					"\"$(SRCROOT)/../../../../third-party-libs/dist/Darwin/iOS_fat/lib\"",
 				);
 				MACH_O_TYPE = mh_dylib;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1572,9 +1610,9 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					../build/universal/include,
 					IJKMediaPlayer/ijkmedia,
 					"\"$(SRCROOT)/../../../src/ijkmedia\"",
+					"\"$(SRCROOT)/../../../../third-party-libs/dist/Darwin/iOS_fat/include\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/IJKMediaFrameworkWithSSL/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1582,7 +1620,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../build/universal/lib\"",
+					"\"$(SRCROOT)/../../../../third-party-libs/dist/Darwin/iOS_fat/lib\"",
 				);
 				MACH_O_TYPE = mh_dylib;
 				MTL_ENABLE_DEBUG_INFO = NO;
