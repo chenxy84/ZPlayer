@@ -551,9 +551,10 @@ static int decode_video_internal(Ijk_VideoToolBox_Opaque* context, AVCodecContex
         goto failed;
     }
 
-    if (avpkt->flags & AV_PKT_FLAG_NEW_SEG) {
-        context->new_seg_flag = true;
-    }
+    //TODO by chenxiangyu
+//    if (avpkt->flags & AV_PKT_FLAG_NEW_SEG) {
+//        context->new_seg_flag = true;
+//    }
 
     sample_info = &context->sample_info;
     if (!sample_info) {
@@ -623,7 +624,9 @@ static inline void DuplicatePkt(Ijk_VideoToolBox_Opaque* context, const AVPacket
         ResetPktBuffer(context);
     }
     AVPacket* avpkt = &context->m_buffer_packet[context->m_buffer_deep];
-    av_copy_packet(avpkt, pkt);
+    //TODO by chenxiangyu
+    //av_copy_packet(avpkt, pkt);
+    av_packet_copy_props(avpkt, pkt);
     context->m_buffer_deep++;
 }
 
@@ -667,7 +670,15 @@ static int decode_video(Ijk_VideoToolBox_Opaque* context, AVCodecContext *avctx,
                 return ret;
             }
 
-            ret = avcodec_decode_video2(new_avctx, frame, &got_picture, avpkt);
+            //ret = avcodec_decode_video2(new_avctx, frame, &got_picture, avpkt);
+            //TODO by chenxiangyu
+            ret = avcodec_send_packet(new_avctx, avpkt);
+            if (ret < 0) {
+                avcodec_free_context(&new_avctx);
+                return ret;
+            }
+            ret = avcodec_receive_frame(new_avctx, frame);
+            
             if (ret < 0) {
                 avcodec_free_context(&new_avctx);
                 return ret;
@@ -854,8 +865,8 @@ int videotoolbox_sync_decode_frame(Ijk_VideoToolBox_Opaque* context)
                     d->next_pts_tb = d->start_pts_tb;
                 }
             } while (ffp_is_flush_packet(&pkt) || d->queue->serial != d->pkt_serial);
-
-            av_packet_split_side_data(&pkt);
+            //TODO by chenxiangyu
+            //av_packet_split_side_data(&pkt);
 
             av_packet_unref(&d->pkt);
             d->pkt_temp = d->pkt = pkt;

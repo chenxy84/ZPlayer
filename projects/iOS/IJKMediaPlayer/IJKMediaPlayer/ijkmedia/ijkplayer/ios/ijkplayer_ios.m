@@ -66,11 +66,11 @@ void ijkmp_ios_set_glview_l(IjkMediaPlayer *mp, IJKSDLGLView *glView)
 void ijkmp_ios_set_glview(IjkMediaPlayer *mp, IJKSDLGLView *glView)
 {
     assert(mp);
-    MPTRACE("ijkmp_ios_set_view(glView=%p)\n", (void*)glView);
+    MPTRACE("ijkmp_ios_set_view(glView=%p)\n", (__bridge  void*)glView);
     pthread_mutex_lock(&mp->mutex);
     ijkmp_ios_set_glview_l(mp, glView);
     pthread_mutex_unlock(&mp->mutex);
-    MPTRACE("ijkmp_ios_set_view(glView=%p)=void\n", (void*)glView);
+    MPTRACE("ijkmp_ios_set_view(glView=%p)=void\n", (__bridge void*)glView);
 }
 
 bool ijkmp_ios_is_videotoolbox_open_l(IjkMediaPlayer *mp)

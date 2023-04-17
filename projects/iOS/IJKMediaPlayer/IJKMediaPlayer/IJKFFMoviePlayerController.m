@@ -70,7 +70,8 @@ static const char *kIJKFFRequiredFFmpegVersion = "ff4.0--ijk0.8.8--20201130--001
 
     IJKNotificationManager *_notificationManager;
 
-    AVAppAsyncStatistic _asyncStat;
+    //TODO by chenxiangyu
+    //AVAppAsyncStatistic _asyncStat;
     IjkIOAppCacheStatistic _cacheStat;
     NSTimer *_hudTimer;
     IJKSDLHudViewController *_hudViewController;
@@ -181,7 +182,8 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
     self = [super init];
     if (self) {
         ijkmp_global_init();
-        ijkmp_global_set_inject_callback(ijkff_inject_callback);
+        //TODO by chenxiangyu
+        //ijkmp_global_set_inject_callback(ijkff_inject_callback);
 
         [IJKFFMoviePlayerController checkIfFFmpegVersionMatch:NO];
 
@@ -194,7 +196,8 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
         // init fields
         _scalingMode = IJKMPMovieScalingModeAspectFit;
         _shouldAutoplay = YES;
-        memset(&_asyncStat, 0, sizeof(_asyncStat));
+        //TODO by chenxiangyu
+        //memset(&_asyncStat, 0, sizeof(_asyncStat));
         memset(&_cacheStat, 0, sizeof(_cacheStat));
         _monitor = [[IJKFFMonitor alloc] init];
 
@@ -285,7 +288,8 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
     self = [super init];
     if (self) {
         ijkmp_global_init();
-        ijkmp_global_set_inject_callback(ijkff_inject_callback);
+        //TODO by chenxiangyu
+        //ijkmp_global_set_inject_callback(ijkff_inject_callback);
 
         [IJKFFMoviePlayerController checkIfFFmpegVersionMatch:NO];
 
@@ -298,7 +302,8 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
         // init fields
         _scalingMode = IJKMPMovieScalingModeAspectFit;
         _shouldAutoplay = YES;
-        memset(&_asyncStat, 0, sizeof(_asyncStat));
+        //TODO by chenxiangyu
+        //memset(&_asyncStat, 0, sizeof(_asyncStat));
         memset(&_cacheStat, 0, sizeof(_cacheStat));
         _monitor = [[IJKFFMonitor alloc] init];
 
@@ -689,13 +694,14 @@ inline static int getPlayerOption(IJKFFOptionCategory category)
 
     NSTimeInterval demux_cache = ((NSTimeInterval)ijkmp_get_playable_duration(_mediaPlayer)) / 1000;
 
-    int64_t buf_forwards = _asyncStat.buf_forwards;
+    //TODO by chenxiangyu
+//    int64_t buf_forwards = _asyncStat.buf_forwards;
     int64_t bit_rate = ijkmp_get_property_int64(_mediaPlayer, FFP_PROP_INT64_BIT_RATE, 0);
 
-    if (buf_forwards > 0 && bit_rate > 0) {
-        NSTimeInterval io_cache = ((float)buf_forwards) * 8 / bit_rate;
-        demux_cache += io_cache;
-    }
+//    if (buf_forwards > 0 && bit_rate > 0) {
+//        NSTimeInterval io_cache = ((float)buf_forwards) * 8 / bit_rate;
+//        demux_cache += io_cache;
+//    }
 
     return demux_cache;
 }
@@ -865,14 +871,17 @@ inline static NSString *formatedSpeed(int64_t bytes, int64_t elapsed_milli) {
     [self setHudValue:formatedSize(_cacheStat.cache_physical_pos) forKey:@"cache-physical-pos"];
     [self setHudValue:formatedSize(_cacheStat.cache_file_pos) forKey:@"cache-file-pos"];
     [self setHudValue:formatedSize(_cacheStat.cache_count_bytes) forKey:@"cache-bytes"];
-    [self setHudValue:[NSString stringWithFormat:@"-%@, %@",
-                          formatedSize(_asyncStat.buf_backwards),
-                          formatedDurationBytesAndBitrate(_asyncStat.buf_backwards, bitRate)]
-                  forKey:@"async-backward"];
-    [self setHudValue:[NSString stringWithFormat:@"+%@, %@",
-                          formatedSize(_asyncStat.buf_forwards),
-                          formatedDurationBytesAndBitrate(_asyncStat.buf_forwards, bitRate)]
-                  forKey:@"async-forward"];
+    
+    //TODO by chenxiangyu
+//    [self setHudValue:[NSString stringWithFormat:@"-%@, %@",
+//                          formatedSize(_asyncStat.buf_backwards),
+//                          formatedDurationBytesAndBitrate(_asyncStat.buf_backwards, bitRate)]
+//                  forKey:@"async-backward"];
+    
+//    [self setHudValue:[NSString stringWithFormat:@"+%@, %@",
+//                          formatedSize(_asyncStat.buf_forwards),
+//                          formatedDurationBytesAndBitrate(_asyncStat.buf_forwards, bitRate)]
+//                  forKey:@"async-forward"];
 
     int64_t tcpSpeed = ijkmp_get_property_int64(_mediaPlayer, FFP_PROP_INT64_TCP_SPEED, 0);
     [self setHudValue:[NSString stringWithFormat:@"%@", formatedSpeed(tcpSpeed, 1000)]
@@ -1364,6 +1373,7 @@ int media_player_msg_loop(void* arg)
 
 #pragma mark av_format_control_message
 
+/*
 static int onInjectIOControl(IJKFFMoviePlayerController *mpc, id<IJKMediaUrlOpenDelegate> delegate, int type, void *data, size_t data_size)
 {
     AVAppIOControl *realData = data;
@@ -1588,6 +1598,7 @@ static int ijkff_inject_callback(void *opaque, int message, void *data, size_t d
         }
     }
 }
+ */
 
 #pragma mark Airplay
 

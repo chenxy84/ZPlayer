@@ -16,6 +16,8 @@ projects/Android/sdk/.build
 #iOS
 projects/iOS/IJKMediaPlayer/IJKMediaPlayer.xcodeproj/project.xcworkspace/xcuserdata/*
 projects/iOS/IJKMediaPlayer/IJKMediaPlayer.xcodeproj/xcuserdata/*
+projects/iOS/IJKMediaDemo/IJKMediaDemo.xcodeproj/xcuserdata/*
+projects/iOS/IJKMediaDemo/IJKMediaDemo.xcodeproj/project.xcworkspace/xcuserdata/*
 
 
 #Qt

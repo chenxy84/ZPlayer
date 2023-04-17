@@ -24,11 +24,12 @@ data class Video(val name: String, val url: String)
 val TAG = "MainActivity"
 
 val videos = listOf(
-
     Video("Local test",""),
-    Video("","/sdcard/test1.mp4"),
-    Video("","/sdcard/test1.webm"),
-    Video("","/sdcard/test_dolby_vision.mp4"),
+    Video("","/sdcard/Samples/test1.mp4"),
+    Video("","/sdcard/Samples/test1.webm"),
+    Video("","/sdcard/Samples/test_dolby_vision.mp4"),
+    Video("", "/sdcard/Samples/4035d397-17db85911c1.mov"),
+    Video("", "/sdcard/Samples/179d548b-17b9a44c6eb.mp4")
 )
 
 class MainActivity : ComponentActivity() {
