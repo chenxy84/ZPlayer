@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.18)
-project("player_sdk")
+# project("zplayer_sdk")
 
-set(ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/..)
+set(ROOT_PATH ../..)
 message("Project root path = ${ROOT_PATH}")
 
 set(SRC_PATH ${ROOT_PATH}/src)
@@ -33,23 +33,6 @@ set(SOURCE_IJK_MEDIA
 
         ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/allformats.c
         ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/cJSON.c
-#        ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/ijklas.c
-#        ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/ijklivehook.c
-#        ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/ijkmediadatasource.c
-#        ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/ijkio.c
-#        ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/ijkiomanager.c
-#        ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/ijkiocache.c
-#        ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/ijkioffio.c
-#        ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/ijkioandroidio.c
-#        ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/ijkioprotocol.c
-#        ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/ijkioapplication.c
-#        ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/ijkiourlhook.c
-#        ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/hls_multi_bitrate.c
-
-#        ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/ijkasync.c
-#        ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/ijkurlhook.c
-#        ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/ijklongurl.c
-#        ${SRC_PATH}/ijkmedia/ijkplayer/ijkavformat/ijksegment.c
 
         ${SRC_PATH}/ijkmedia/ijkplayer/ijkavutil/ijkdict.c
         ${SRC_PATH}/ijkmedia/ijkplayer/ijkavutil/ijkutils.c
@@ -124,6 +107,17 @@ set(SOURCE_IJK_SOUNDTOUCH
 )
 
 link_directories(${LIB_PATH}/lib)
+set(ffmpeg_libs
+        avcodec
+        avfilter
+        avformat
+        avutil
+        swresample
+        swscale
+        crypto
+        ssl
+        x264
+        )
 
 add_library(yuv_static
         STATIC
@@ -136,16 +130,21 @@ add_library(player_sdl
         )
 
 target_link_libraries(player_sdl
-        ffmpeg
         yuv_static
         )
 
-add_library(player_sdk
-        STATIC
+# add_library(player_core
+#         STATIC
+#         ${SOURCE_IJK_MEDIA}
+#         )
+
+add_library(player_core
+        SHARED
         ${SOURCE_IJK_MEDIA}
         )
 
-target_link_libraries(player_sdk
-        ffmpeg
+target_link_libraries(player_core
+        ${ffmpeg_libs}
+        yuv_static
         player_sdl
         )
