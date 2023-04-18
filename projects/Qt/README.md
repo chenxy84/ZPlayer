@@ -1,3 +1,1 @@
-
-
-cmake .. -DCMAKE_PREFIX_PATH=/Users/chenxiangyu/Workspace/SDK/Qt/6.2.4/macos/lib/cmake
+cmake -GXcode ../projects/Qt/ -DCMAKE_PREFIX_PATH=/Users/chenxiangyu/Workspace/OpenSource/obs-build-dependencies/obs-deps 

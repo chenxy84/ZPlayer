@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.18)
-# project("zplayer_sdk")
+project("player_core")
 
 set(ROOT_PATH ../..)
 message("Project root path = ${ROOT_PATH}")
@@ -40,6 +40,13 @@ set(SOURCE_IJK_MEDIA
         ${SRC_PATH}/ijkmedia/ijkplayer/ijkavutil/ijktree.c
         ${SRC_PATH}/ijkmedia/ijkplayer/ijkavutil/ijkfifo.c
         ${SRC_PATH}/ijkmedia/ijkplayer/ijkavutil/ijkstl.cpp
+        )
+
+set(SOURCE_IJK_MEDIA_QT
+        ${SRC_PATH}/ijkmedia/ijkplayer/qt/ijkplayer_qt.c
+
+#        ${SRC_PATH}/ijkmedia/ijkplayer/qt/pipeline/ffpipeline_qt.c
+#        ${SRC_PATH}/ijkmedia/ijkplayer/qt/pipeline/ffpipenode_qt_mediacodec_vdec.c
         )
 
 set(SOURCE_IJK_SDL
@@ -141,6 +148,7 @@ target_link_libraries(player_sdl
 add_library(player_core
         SHARED
         ${SOURCE_IJK_MEDIA}
+        ${SOURCE_IJK_MEDIA_QT}
         )
 
 target_link_libraries(player_core

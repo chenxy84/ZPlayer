@@ -249,6 +249,14 @@ enum {
     AV_SYNC_EXTERNAL_CLOCK, /* synchronize to an external clock */
 };
 
+enum ShowMode {
+    SHOW_MODE_NONE = -1, 
+    SHOW_MODE_VIDEO = 0, 
+    SHOW_MODE_WAVES, 
+    SHOW_MODE_RDFT, 
+    SHOW_MODE_NB
+} ;
+
 typedef struct Decoder {
     AVPacket pkt;
     AVPacket pkt_temp;
@@ -337,9 +345,7 @@ typedef struct VideoState {
     int frame_drops_late;
     int continuous_frame_drops_early;
 
-    enum ShowMode {
-        SHOW_MODE_NONE = -1, SHOW_MODE_VIDEO = 0, SHOW_MODE_WAVES, SHOW_MODE_RDFT, SHOW_MODE_NB
-    } show_mode;
+    enum ShowMode show_mode;
     int16_t sample_array[SAMPLE_ARRAY_SIZE];
     int sample_array_index;
     int last_i_start;
