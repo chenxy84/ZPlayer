@@ -4,7 +4,7 @@
 PlayerController::PlayerController(QObject *parent)
     : QObject{parent}
 {
-
+    mpc_ = new IJKMediaPlayerController();
 }
 
 PlayerController::~PlayerController() {
@@ -14,6 +14,8 @@ PlayerController::~PlayerController() {
 
 void PlayerController::Start(std::string url) {
     std::cout<<"player start" << std::endl;
+    mpc_->SetSource(url);
+    mpc_->Prepare();
 }
 
 

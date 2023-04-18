@@ -16,13 +16,22 @@ extern "C" {
 }
 #endif
 
+#include <string>
+
 class IJKMediaPlayerController {
 public:
     IJKMediaPlayerController();
     virtual ~IJKMediaPlayerController();
 
+    void SetSource(std::string url);
+    void Prepare();
+    void Play();
+    void Stop();
+    void Pause();
+    void Seek(long ts);
 
 private:
-    IjkMediaPlayer *mp;
+    IjkMediaPlayer *mp_;
+    std::string url_;
 
 };

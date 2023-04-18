@@ -21,8 +21,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#ifndef IJKPLAYER_ANDROID__IJKPLAYER_ANDROID_H
-#define IJKPLAYER_ANDROID__IJKPLAYER_ANDROID_H
+#ifndef IJKPLAYER_ANDROID__IJKPLAYER_QT_H
+#define IJKPLAYER_ANDROID__IJKPLAYER_QT_H
 
 #include "../ijkplayer.h"
 

@@ -25,11 +25,11 @@
 
 #include <assert.h>
 // #include "ijksdl/android/ijksdl_android.h"
-#include "../ff_fferror.h"
-#include "../ff_ffplay.h"
-#include "../ijkplayer_internal.h"
+#include "ff_fferror.h"
+#include "ff_ffplay.h"
+#include "ijkplayer_internal.h"
 // #include "../pipeline/ffpipeline_ffplay.h"
-// #include "pipeline/ffpipeline_android.h"
+ #include "pipeline/ffpipeline_qt.h"
 
 IjkMediaPlayer *ijkmp_qt_create(int(*msg_loop)(void*))
 {
@@ -37,13 +37,13 @@ IjkMediaPlayer *ijkmp_qt_create(int(*msg_loop)(void*))
     if (!mp)
         goto fail;
 
-    // mp->ffplayer->vout = SDL_VoutAndroid_CreateForAndroidSurface();
-    // if (!mp->ffplayer->vout)
-    //     goto fail;
+//     mp->ffplayer->vout = SDL_VoutAndroid_CreateForAndroidSurface();
+//     if (!mp->ffplayer->vout)
+//         goto fail;
 
-    // mp->ffplayer->pipeline = ffpipeline_create_from_android(mp->ffplayer);
-    // if (!mp->ffplayer->pipeline)
-    //     goto fail;
+     mp->ffplayer->pipeline = ffpipeline_create_from_qt(mp->ffplayer);
+     if (!mp->ffplayer->pipeline)
+         goto fail;
 
     // ffpipeline_set_vout(mp->ffplayer->pipeline, mp->ffplayer->vout);
 

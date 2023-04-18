@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include "IJKMediaPlayer/ijkplayer_controller.h"
+
 class PlayerController : public QObject
 {
     Q_OBJECT
@@ -18,6 +20,8 @@ public:
 signals:
 
 
+private:
+    IJKMediaPlayerController* mpc_;
 
 };
 

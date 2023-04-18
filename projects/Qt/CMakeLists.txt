@@ -26,6 +26,10 @@ include_directories(
         ${SRC_PATH}/ijkmedia/ijksoundtouch/include
         ${LIB_PATH}/include
         )
+        
+include_directories(
+        ${SRC_PATH}/ijkmedia/ijkplayer/qt
+        )
 
 set(SOURCE_IJK_MEDIA
         ${SRC_PATH}/ijkmedia/ijkplayer/ff_cmdutils.c
@@ -51,8 +55,7 @@ set(SOURCE_IJK_MEDIA
 
 set(SOURCE_IJK_MEDIA_QT
         ${SRC_PATH}/ijkmedia/ijkplayer/qt/ijkplayer_qt.c
-
-#        ${SRC_PATH}/ijkmedia/ijkplayer/qt/pipeline/ffpipeline_qt.c
+        ${SRC_PATH}/ijkmedia/ijkplayer/qt/pipeline/ffpipeline_qt.c
 #        ${SRC_PATH}/ijkmedia/ijkplayer/qt/pipeline/ffpipenode_qt_mediacodec_vdec.c
         )
 
