@@ -25,6 +25,9 @@
 #ifndef IJKSDL__IJKSDL_MUTEX_H
 #define IJKSDL__IJKSDL_MUTEX_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 #include <stdint.h>
 #include <pthread.h>
 
@@ -52,6 +55,10 @@ int         SDL_CondSignal(SDL_cond *cond);
 int         SDL_CondBroadcast(SDL_cond *cond);
 int         SDL_CondWaitTimeout(SDL_cond *cond, SDL_mutex *mutex, uint32_t ms);
 int         SDL_CondWait(SDL_cond *cond, SDL_mutex *mutex);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

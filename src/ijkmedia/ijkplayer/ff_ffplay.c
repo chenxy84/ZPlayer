@@ -4351,8 +4351,11 @@ int ffp_prepare_async_l(FFPlayer *ffp, const char *file_name)
     av_opt_set_dict(ffp, &ffp->player_opts);
     if (!ffp->aout) {
         ffp->aout = ffpipeline_open_audio_output(ffp->pipeline, ffp);
-        if (!ffp->aout)
+        if (!ffp->aout) {
+            av_log(NULL, AV_LOG_ERROR, "ffp_prepare_async_l ffp->aout is null.\n");
             return -1;
+        }
+            
     }
 
 #if CONFIG_AVFILTER

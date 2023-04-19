@@ -34,7 +34,8 @@ inline static SDL_Aout *SDL_Aout_CreateInternal(size_t opaque_size)
     if (!aout)
         return NULL;
 
-    aout->opaque = mallocz(opaque_size);
+    //Modify by chenxiangyu
+    aout->opaque = (SDL_Aout_Opaque *)mallocz(opaque_size);
     if (!aout->opaque) {
         free(aout);
         return NULL;

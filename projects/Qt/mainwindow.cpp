@@ -17,7 +17,7 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::StartButtonClick() {
-    playerController->Start("test.mp4");
+    playerController->Start("/Users/chenxiangyu/Documents/4035d397-17db85911c1.mov");
 
 }
 

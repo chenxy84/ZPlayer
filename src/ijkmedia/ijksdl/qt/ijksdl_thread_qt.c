@@ -28,8 +28,21 @@
 static void *SDL_RunThread(void *data)
 {
     SDL_Thread *thread = data;
-    //TODO 
-    //pthread_setname_np(pthread_self(), thread->name);
+//Fix by chenxiangyu
+#if defined(__APPLE__)
+    pthread_setname_np(thread->name);
+#elif defined(__FreeBSD__)
+    pthread_set_name_np(pthread_self(), thread->name);
+#elif defined(__GLIBC__) && !defined(__MINGW32__)
+    if (strlen(thread->name) <= 15) {
+        pthread_setname_np(pthread_self(), thread->name);
+    } else {
+        char *thread_name = bstrdup_n(thread->name, 15);
+        pthread_setname_np(pthread_self(), thread_name);
+        bfree(thread_name);
+    }
+#endif
+    
     thread->retval = thread->func(thread->data);
     return NULL;
 }

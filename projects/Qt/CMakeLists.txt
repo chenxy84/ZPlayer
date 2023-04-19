@@ -77,7 +77,10 @@ set(SOURCE_IJK_SDL
         )
 
 set(SOURCE_IJK_SDL_QT
+        ${SRC_PATH}/ijkmedia/ijksdl/qt/ijksdl_thread_qt.h
         ${SRC_PATH}/ijkmedia/ijksdl/qt/ijksdl_thread_qt.c
+        ${SRC_PATH}/ijkmedia/ijksdl/qt/ijksdl_aout_qt.h
+        ${SRC_PATH}/ijkmedia/ijksdl/qt/ijksdl_aout_qt.cc
         )
 
 set(SOURCE_IJK_YUV
@@ -146,17 +149,16 @@ add_library(yuv_static
         ${SOURCE_IJK_YUV}
 )
 
-add_library(player_sdl_static
-        STATIC
-        ${SOURCE_IJK_SDL}
-        ${SOURCE_IJK_SDL_QT}
-        )
-
-add_library(player_core_static
-        STATIC
-        ${SOURCE_IJK_MEDIA}
-        ${SOURCE_IJK_MEDIA_QT}
-        )
+# add_library(player_sdl_static
+#         STATIC
+# 
+#         )
+# 
+# add_library(player_core_static
+#         STATIC
+#         ${SOURCE_IJK_MEDIA}
+#         ${SOURCE_IJK_MEDIA_QT}
+#         )
 
 # add_library(player_core
 #         SHARED
@@ -170,10 +172,6 @@ add_library(player_core_static
 #         player_sdl_static
 #         )
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets OpenGLWidgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets OpenGLWidgets)
-
-
 set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
@@ -186,11 +184,16 @@ set(PROJECT_SOURCES
 )
 
 
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets OpenGLWidgets Multimedia)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets OpenGLWidgets Multimedia)
+
 qt_add_executable(zplayer
     MANUAL_FINALIZATION
     ${PROJECT_SOURCES}
     ${SOURCE_IJK_MEDIA}
     ${SOURCE_IJK_MEDIA_QT}
+    ${SOURCE_IJK_SDL}
+    ${SOURCE_IJK_SDL_QT}
 )
 
 # qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
@@ -213,9 +216,9 @@ set(DEPS_LIBS
 target_link_libraries(zplayer PRIVATE 
     Qt${QT_VERSION_MAJOR}::Widgets  
     Qt${QT_VERSION_MAJOR}::OpenGLWidgets
+    Qt${QT_VERSION_MAJOR}::Multimedia
     ${ffmpeg_static_libs}
     yuv_static
-    player_sdl_static
     ${DEPS_LIBS}
     )
 

@@ -24,11 +24,11 @@
 //#include "ffpipenode_ios_videotoolbox_vdec.h"
 //#include "ffpipenode_ffplay_vdec.h"
 #include "ff_ffplay.h"
-//#import "ijksdl/ios/ijksdl_aout_ios_audiounit.h"
+#include "ijksdl/qt/ijksdl_aout_qt.h"
 
 struct IJKFF_Pipeline_Opaque {
     FFPlayer    *ffp;
-    bool         is_videotoolbox_open;
+//    bool         is_videotoolbox_open;
 };
 
 static void func_destroy(IJKFF_Pipeline *pipeline)
@@ -48,19 +48,19 @@ static IJKFF_Pipenode *func_open_video_decoder(IJKFF_Pipeline *pipeline, FFPlaye
     if (node == NULL) {
 //        node = ffpipenode_create_video_decoder_from_ffplay(ffp);
         ffp->stat.vdec_type = FFP_PROPV_DECODER_AVCODEC;
-        opaque->is_videotoolbox_open = false;
+//        opaque->is_videotoolbox_open = false;
     } else {
         ffp->stat.vdec_type = FFP_PROPV_DECODER_VIDEOTOOLBOX;
-        opaque->is_videotoolbox_open = true;
+//        opaque->is_videotoolbox_open = true;
     }
-    ffp_notify_msg2(ffp, FFP_MSG_VIDEO_DECODER_OPEN, opaque->is_videotoolbox_open);
+//    ffp_notify_msg2(ffp, FFP_MSG_VIDEO_DECODER_OPEN, opaque->is_videotoolbox_open);
     return node;
 }
 
 static SDL_Aout *func_open_audio_output(IJKFF_Pipeline *pipeline, FFPlayer *ffp)
 {
-    //TODO
-    return NULL;//SDL_AoutIos_CreateForAudioUnit();
+    
+    return SDL_Aout_Qt_Create();
 }
 
 static SDL_Class g_pipeline_class = {
