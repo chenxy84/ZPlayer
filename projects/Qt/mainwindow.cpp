@@ -9,6 +9,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     connect(ui->startButton, SIGNAL(clicked()), this, SLOT(StartButtonClick()));
+    
+    playerController->Start("/Users/chenxiangyu/Documents/Samples/test_hevc_3840x2160_6M_23.98fps.mp4");
+    //    playerController->Start("/Users/chenxiangyu/Documents/4035d397-17db85911c1.mov");
+    isPlaying = true;
 }
 
 MainWindow::~MainWindow()
@@ -17,8 +21,14 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::StartButtonClick() {
-//    playerController->Start("/Users/chenxiangyu/Documents/Samples/test_hevc_3840x2160_6M_23.98fps.mp4");
-    playerController->Start("/Users/chenxiangyu/Documents/4035d397-17db85911c1.mov");
+    
+    if(!isPlaying) {
+        playerController->Play();
+    } else {
+        playerController->Pause();
+    }
+    
+    isPlaying = !isPlaying;
 
 }
 

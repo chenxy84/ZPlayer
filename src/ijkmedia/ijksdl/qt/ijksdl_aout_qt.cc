@@ -1,26 +1,3 @@
-/*
- * ijksdl_aout_ios_audiounit.m
- *
- * Copyright (c) 2013 Bilibili
- * Copyright (c) 2013 Zhang Rui <bbcallen@gmail.com>
- *
- * This file is part of ijkPlayer.
- *
- * ijkPlayer is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * ijkPlayer is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with ijkPlayer; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
-
 #include "ijksdl_aout_qt.h"
 
 #ifdef __cplusplus
@@ -99,7 +76,7 @@ static int aout_thread(void *arg)
     SDL_AudioCallback audio_cblk = opaque->spec.callback;
     void *userdata = opaque->spec.userdata;
     uint8_t *buffer = opaque->buffer;
-    size_t copy_size = 0;
+    int copy_size = 0;
 
     assert(opaque->io);
     assert(buffer);
@@ -148,8 +125,8 @@ static int aout_thread(void *arg)
 //            // no-op
 //        }
         
-        copy_size = opaque->audio->bytesFree();
-        printf("status = %d, copy size = %lld \n", opaque->audio->state(), copy_size);
+        copy_size = (int)opaque->audio->bytesFree();
+        printf("status = %d, copy size = %d \n", opaque->audio->state(), copy_size);
         audio_cblk(userdata, buffer, copy_size);
         if (opaque->need_flush) {
 //            SDL_Android_AudioTrack_flush(env, atrack);
@@ -167,7 +144,7 @@ static int aout_thread(void *arg)
             if(copy_size > 0) {
                 opaque->io->write((const char *)buffer, (qint64)copy_size);
                 
-                static FILE *file = fopen("/Users/chenxiangyu/Documents/4035d397-17db85911c1.mov.pcm", "wb+");
+                static FILE *file = fopen("", "wb+");
                 if(file) {
                     fwrite(buffer, 1, copy_size, file);
                 }

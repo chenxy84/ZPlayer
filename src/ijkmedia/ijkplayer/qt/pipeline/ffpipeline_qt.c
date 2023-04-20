@@ -22,17 +22,39 @@
 
 #include "ffpipeline_qt.h"
 //#include "ffpipenode_ios_videotoolbox_vdec.h"
-//#include "ffpipenode_ffplay_vdec.h"
+#include "ijkplayer/pipeline/ffpipenode_ffplay_vdec.h"
 #include "ff_ffplay.h"
 #include "ijksdl/qt/ijksdl_aout_qt.h"
 
+static SDL_Class g_pipeline_class = {
+    .name = "ffpipeline_qt_media",
+};
+
 struct IJKFF_Pipeline_Opaque {
     FFPlayer    *ffp;
-//    bool         is_videotoolbox_open;
+    SDL_mutex   *surface_mutex;
+    
+    SDL_Vout    *weak_vout;
 };
 
 static void func_destroy(IJKFF_Pipeline *pipeline)
 {
+    
+}
+
+inline static bool check_ffpipeline(IJKFF_Pipeline* pipeline, const char *func_name)
+{
+    if (!pipeline || !pipeline->opaque || !pipeline->opaque_class) {
+        ALOGE("%s.%s: invalid pipeline\n", pipeline->opaque_class->name, func_name);
+        return false;
+    }
+
+    if (pipeline->opaque_class != &g_pipeline_class) {
+        ALOGE("%s.%s: unsupported method\n", pipeline->opaque_class->name, func_name);
+        return false;
+    }
+
+    return true;
 }
 
 //TODO
@@ -46,7 +68,7 @@ static IJKFF_Pipenode *func_open_video_decoder(IJKFF_Pipeline *pipeline, FFPlaye
             ALOGE("vtb fail!!! switch to ffmpeg decode!!!! \n");
     }
     if (node == NULL) {
-//        node = ffpipenode_create_video_decoder_from_ffplay(ffp);
+        node = ffpipenode_create_video_decoder_from_ffplay(ffp);
         ffp->stat.vdec_type = FFP_PROPV_DECODER_AVCODEC;
 //        opaque->is_videotoolbox_open = false;
     } else {
@@ -59,13 +81,8 @@ static IJKFF_Pipenode *func_open_video_decoder(IJKFF_Pipeline *pipeline, FFPlaye
 
 static SDL_Aout *func_open_audio_output(IJKFF_Pipeline *pipeline, FFPlayer *ffp)
 {
-    
     return SDL_Aout_Qt_Create();
 }
-
-static SDL_Class g_pipeline_class = {
-    .name = "ffpipeline_qt",
-};
 
 IJKFF_Pipeline *ffpipeline_create_from_qt(FFPlayer *ffp)
 {
@@ -80,4 +97,13 @@ IJKFF_Pipeline *ffpipeline_create_from_qt(FFPlayer *ffp)
     pipeline->func_open_audio_output  = func_open_audio_output;
 
     return pipeline;
+}
+
+void ffpipeline_set_vout(IJKFF_Pipeline* pipeline, SDL_Vout *vout)
+{
+    if (!check_ffpipeline(pipeline, __func__))
+        return;
+
+    IJKFF_Pipeline_Opaque *opaque = pipeline->opaque;
+    opaque->weak_vout = vout;
 }

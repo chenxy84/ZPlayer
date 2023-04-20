@@ -7,4 +7,6 @@ struct FFPlayer;
 
 IJKFF_Pipeline *ffpipeline_create_from_qt(struct FFPlayer *ffp);
 
+void ffpipeline_set_vout(IJKFF_Pipeline* pipeline, SDL_Vout *vout);
+
 #endif

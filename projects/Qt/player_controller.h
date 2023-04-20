@@ -16,6 +16,11 @@ public:
 public:
     void Start(std::string url);
     void Stop();
+    
+    void Play();
+    void Pause();
+    
+    void Seek(long ts);
 
 signals:
 

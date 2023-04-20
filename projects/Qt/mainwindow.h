@@ -22,5 +22,8 @@ public slots:
 private:
     Ui::MainWindow *ui;
     PlayerController *playerController;
+    
+    bool isPrepared = false;
+    bool isPlaying = false;
 };
 #endif // MAINWINDOW_H

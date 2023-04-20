@@ -35,7 +35,7 @@ inline static SDL_Vout *SDL_Vout_CreateInternal(size_t opaque_size)
     if (!vout)
         return NULL;
 
-    vout->opaque = calloc(1, opaque_size);
+    vout->opaque = (SDL_Vout_Opaque *)calloc(1, opaque_size);
     if (!vout->opaque) {
         free(vout);
         return NULL;
@@ -67,11 +67,11 @@ inline static void SDL_Vout_FreeInternal(SDL_Vout *vout)
 
 inline static SDL_VoutOverlay *SDL_VoutOverlay_CreateInternal(size_t opaque_size)
 {
-    SDL_VoutOverlay *overlay = (SDL_VoutOverlay*) calloc(1, sizeof(SDL_VoutOverlay));
+    SDL_VoutOverlay *overlay = (SDL_VoutOverlay *) calloc(1, sizeof(SDL_VoutOverlay));
     if (!overlay)
         return NULL;
 
-    overlay->opaque = calloc(1, opaque_size);
+    overlay->opaque = (SDL_VoutOverlay_Opaque *)calloc(1, opaque_size);
     if (!overlay->opaque) {
         free(overlay);
         return NULL;

@@ -81,6 +81,8 @@ set(SOURCE_IJK_SDL_QT
         ${SRC_PATH}/ijkmedia/ijksdl/qt/ijksdl_thread_qt.c
         ${SRC_PATH}/ijkmedia/ijksdl/qt/ijksdl_aout_qt.h
         ${SRC_PATH}/ijkmedia/ijksdl/qt/ijksdl_aout_qt.cc
+        ${SRC_PATH}/ijkmedia/ijksdl/qt/ijksdl_vout_qt.h
+        ${SRC_PATH}/ijkmedia/ijksdl/qt/ijksdl_vout_qt.cc
         )
 
 set(SOURCE_IJK_YUV

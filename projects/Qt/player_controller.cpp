@@ -11,14 +11,23 @@ PlayerController::~PlayerController() {
 
 }
 
-
 void PlayerController::Start(std::string url) {
-    std::cout<<"player start" << std::endl;
     mpc_->SetSource(url);
     mpc_->Prepare();
 }
 
-
 void PlayerController::Stop() {
-    std::cout<<"player stop" << std::endl;
+    mpc_->Stop();
+}
+
+void PlayerController::Play() {
+    mpc_->Play();
+}
+
+void PlayerController::Pause() {
+    mpc_->Pause();
+}
+
+void PlayerController::Seek(long ts) {
+    mpc_->Seek(ts);
 }

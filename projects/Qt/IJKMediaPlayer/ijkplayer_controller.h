@@ -25,9 +25,11 @@ public:
 
     void SetSource(std::string url);
     void Prepare();
-    void Play();
     void Stop();
+    
+    void Play();
     void Pause();
+    
     void Seek(long ts);
 
 private:
