@@ -38,6 +38,7 @@ void MainWindow::dropEvent(QDropEvent *event) {
         playerController->SetDisplayView(ui->openGLWidget);
         playerController->Start(fileName.toStdString());
         isPlaying = true;
+        ui->startButton->setText("||");
     }
 }
 
@@ -48,14 +49,16 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::StartButtonClick() {
-    
-    if(!isPlaying) {
-        playerController->Play();
-    } else {
-        playerController->Pause();
+    if(playerController) {
+        if(!isPlaying) {
+            playerController->Play();
+            ui->startButton->setText("||");
+        } else {
+            playerController->Pause();
+            ui->startButton->setText(">");
+        }
+        
+        isPlaying = !isPlaying;
     }
-    
-    isPlaying = !isPlaying;
-
 }
 

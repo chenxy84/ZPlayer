@@ -154,6 +154,7 @@ static int msg_loop(void *arg) {
 IJKMediaPlayerController::IJKMediaPlayerController() {
     ijkmp_global_init();
     mp_ = ijkmp_qt_create(msg_loop);
+    
 }
 
 IJKMediaPlayerController::~IJKMediaPlayerController() {

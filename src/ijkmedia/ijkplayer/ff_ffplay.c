@@ -2885,6 +2885,12 @@ static int stream_component_open(FFPlayer *ffp, int stream_index)
         av_log(NULL, AV_LOG_INFO, "android set codec to %s\n", codec->long_name);
     }
 #endif
+    
+#if defined(__APPLE__)
+    //add by chenxiangyu
+    //avctx->pix_fmt = AV_PIX_FMT_VIDEOTOOLBOX;
+    
+#endif
 
     avctx->codec_id = codec->id;
     //TODO
