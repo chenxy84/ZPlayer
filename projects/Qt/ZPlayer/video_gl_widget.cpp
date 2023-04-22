@@ -72,12 +72,12 @@ void OpenGLDisplay::DisplayVideoFrame(unsigned char **yuv, uint16_t *line_size, 
     unsigned char* dst_u = dst_yuv + frameBytes; int src_u_line_size = line_size[1];
     unsigned char* dst_v = dst_yuv + frameBytes * 5/4; int src_v_line_size = line_size[2];
     for(int i = 0; i < impl->mVideoH; i ++) {
-        memcpy((void *)(dst_y + i * impl->mVideoW), (void *)(yuv[0] + i * src_y_line_size), impl->mVideoH);
+        memcpy((void *)(dst_y + i * impl->mVideoW), (void *)(yuv[0] + i * src_y_line_size), impl->mVideoW);
     }
     
     for(int i = 0; i < impl->mVideoH / 2; i ++) {
-        memcpy((void *)(dst_u + i * impl->mVideoW / 2), (void *)(yuv[1] + i * src_u_line_size), impl->mVideoH / 2);
-        memcpy((void *)(dst_v + i * impl->mVideoW / 2), (void *)(yuv[2] + i * src_v_line_size), impl->mVideoH / 2);
+        memcpy((void *)(dst_u + i * impl->mVideoW / 2), (void *)(yuv[1] + i * src_u_line_size), impl->mVideoW / 2);
+        memcpy((void *)(dst_v + i * impl->mVideoW / 2), (void *)(yuv[2] + i * src_v_line_size), impl->mVideoW / 2);
     }
     
 //    memcpy(dst_yuv, yuv[0], frameBytes);
