@@ -31,3 +31,7 @@ void PlayerController::Pause() {
 void PlayerController::Seek(long ts) {
     mpc_->Seek(ts);
 }
+
+void PlayerController::SetDisplayView(void *view) {
+    mpc_->SetDisplayView(view);
+}

@@ -35,7 +35,7 @@ typedef struct ijkmp_qt_media_format_context {
 // ref_count is 1 after open
 IjkMediaPlayer *ijkmp_qt_create(int(*msg_loop)(void*));
 
-void ijkmp_qt_set_surface(IjkMediaPlayer *mp, void* android_surface);
+void ijkmp_qt_set_glview(IjkMediaPlayer *mp, void* glview);
 void ijkmp_qt_set_volume(IjkMediaPlayer *mp, float left, float right);
 // int  ijkmp_qt_get_audio_session_id(IjkMediaPlayer *mp);
 // void ijkmp_qt_set_mediacodec_select_callback(IjkMediaPlayer *mp, bool (*callback)(void *opaque, ijkmp_mediacodecinfo_context *mcc), void *opaque);

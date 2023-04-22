@@ -181,12 +181,15 @@ set(PROJECT_SOURCES
         mainwindow.ui
         player_controller.cpp
         player_controller.h
+        video_gl_widget.cpp
+        video_gl_widget.h
         IJKMediaPlayer/ijkplayer_controller.cc
         IJKMediaPlayer/ijkplayer_controller.h
 )
 
+include_directories(${CMAKE_SOURCE_DIR})
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets OpenGLWidgets Multimedia)
+find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Widgets OpenGLWidgets Multimedia)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets OpenGLWidgets Multimedia)
 
 qt_add_executable(zplayer

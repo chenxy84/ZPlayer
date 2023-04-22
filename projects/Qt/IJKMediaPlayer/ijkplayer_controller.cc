@@ -188,3 +188,7 @@ void IJKMediaPlayerController::Pause() {
 void IJKMediaPlayerController::Seek(long ts) {
     ijkmp_seek_to(mp_, ts);
 }
+
+void IJKMediaPlayerController::SetDisplayView(void *view) {
+    ijkmp_qt_set_glview(mp_, view);
+}

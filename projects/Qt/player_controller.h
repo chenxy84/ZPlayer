@@ -21,6 +21,8 @@ public:
     void Pause();
     
     void Seek(long ts);
+    
+    void SetDisplayView(void *view);
 
 signals:
 

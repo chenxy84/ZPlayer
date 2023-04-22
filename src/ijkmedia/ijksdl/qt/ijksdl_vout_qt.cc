@@ -12,12 +12,15 @@ extern "C" {
 }
 #endif
 
+#include <QDebug>
+#include "video_gl_widget.h"
+
 typedef struct SDL_VoutSurface_Opaque {
     SDL_Vout *vout;
 } SDL_VoutSurface_Opaque;
 
 struct SDL_Vout_Opaque {
-    IJKSDLGLView *gl_view;
+    OpenGLDisplay *gl_display;
 };
 
 static SDL_VoutOverlay *vout_create_overlay_l(int width, int height, int frame_format, SDL_Vout *vout)
@@ -34,6 +37,7 @@ static SDL_VoutOverlay *vout_create_overlay_l(int width, int height, int frame_f
 static SDL_VoutOverlay *vout_create_overlay(int width, int height, int frame_format, SDL_Vout *vout)
 {
     SDL_LockMutex(vout->mutex);
+    vout->overlay_format = SDL_FCC__GLES2;
     SDL_VoutOverlay *overlay = vout_create_overlay_l(width, height, frame_format, vout);
     SDL_UnlockMutex(vout->mutex);
     return overlay;
@@ -46,7 +50,7 @@ static void vout_free_l(SDL_Vout *vout)
 
     SDL_Vout_Opaque *opaque = vout->opaque;
     if (opaque) {
-        if (opaque->gl_view) {
+        if (opaque->gl_display) {
 //            // TODO: post to MainThread?
 //            [opaque->gl_view release];
 //            opaque->gl_view = nil;
@@ -59,7 +63,7 @@ static void vout_free_l(SDL_Vout *vout)
 static int vout_display_overlay_l(SDL_Vout *vout, SDL_VoutOverlay *overlay)
 {
     SDL_Vout_Opaque *opaque = vout->opaque;
-    IJKSDLGLView *gl_view = opaque->gl_view;
+    OpenGLDisplay *gl_view = opaque->gl_display;
 
     if (!gl_view) {
         ALOGE("vout_display_overlay_l: NULL gl_view\n");
@@ -75,6 +79,9 @@ static int vout_display_overlay_l(SDL_Vout *vout, SDL_VoutOverlay *overlay)
         ALOGE("vout_display_overlay_l: invalid overlay dimensions(%d, %d)\n", overlay->w, overlay->h);
         return -1;
     }
+    int size = overlay->w * overlay->h * 3 / 2;
+    gl_view->InitDrawBuffer(size);
+    gl_view->DisplayVideoFrame(overlay->pixels, overlay->pitches, overlay->w, overlay->h);
     /*
     if (gl_view.isThirdGLView) {
         IJKOverlay ijk_overlay;
@@ -119,7 +126,7 @@ SDL_Vout *SDL_Vout_Qt_ForOpenGL()
         return NULL;
 
     SDL_Vout_Opaque *opaque = vout->opaque;
-    opaque->gl_view = NULL;
+    opaque->gl_display = NULL;
     vout->create_overlay = vout_create_overlay;
     vout->free_l = vout_free_l;
     vout->display_overlay = vout_display_overlay;
@@ -127,18 +134,18 @@ SDL_Vout *SDL_Vout_Qt_ForOpenGL()
     return vout;
 }
 
-static void SDL_Vout_Qt_SetGLView_l(SDL_Vout *vout, void *view)
+static void SDL_Vout_Qt_SetGLView_l(SDL_Vout *vout, OpenGLDisplay *view)
 {
     SDL_Vout_Opaque *opaque = vout->opaque;
 
-    if (opaque->gl_view == view)
+    if (opaque->gl_display == view)
         return;
 
-    if (opaque->gl_view) {
+//    if (!opaque->gl_display) {
 //        [opaque->gl_view release];
 //        opaque->gl_view = nil;
-        opaque->gl_view = NULL;
-    }
+        opaque->gl_display = view;
+//    }
 
     if (view) {
         //opaque->gl_view = [view retain];
@@ -149,7 +156,8 @@ static void SDL_Vout_Qt_SetGLView_l(SDL_Vout *vout, void *view)
 
 void SDL_Vout_Qt_SetGLView(SDL_Vout *vout, void *view)
 {
+    OpenGLDisplay *dispaly = (OpenGLDisplay *)view;
     SDL_LockMutex(vout->mutex);
-    SDL_Vout_Qt_SetGLView_l(vout, view);
+    SDL_Vout_Qt_SetGLView_l(vout, dispaly);
     SDL_UnlockMutex(vout->mutex);
 }

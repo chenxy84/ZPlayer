@@ -79,12 +79,12 @@ void ijkmp_qt_set_glview_l(IjkMediaPlayer *mp, void *glView)
     SDL_Vout_Qt_SetGLView(mp->ffplayer->vout, glView);
 }
 
-void ijkmp_ios_set_glview(IjkMediaPlayer *mp, IJKSDLGLView *glView)
+void ijkmp_qt_set_glview(IjkMediaPlayer *mp, void *glView)
 {
     assert(mp);
-    MPTRACE("ijkmp_ios_set_view(glView=%p)\n", (void*)glView);
+    MPTRACE("ijkmp_qt_set_view(glView=%p)\n", (void*)glView);
     pthread_mutex_lock(&mp->mutex);
     ijkmp_qt_set_glview_l(mp, glView);
     pthread_mutex_unlock(&mp->mutex);
-    MPTRACE("ijkmp_ios_set_view(glView=%p)=void\n", (void*)glView);
+    MPTRACE("ijkmp_qt_set_view(glView=%p)=void\n", (void*)glView);
 }
