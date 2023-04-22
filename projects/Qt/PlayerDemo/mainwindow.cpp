@@ -1,22 +1,44 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QMimeData>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    , playerController(new PlayerController)
-    
+    , playerController(nullptr)
 {
     ui->setupUi(this);
-
+    
+    this->setAcceptDrops(true);
     connect(ui->startButton, SIGNAL(clicked()), this, SLOT(StartButtonClick()));
-    
-//    playerController->Start("/Users/chenxiangyu/Documents/Samples/test_avc_2160x3840_10M_23.98fps_faststart.mp4");
-//    playerController->Start("/Users/chenxiangyu/Documents/4035d397-17db85911c1.mov");
-    
-    playerController->Start("/Users/chenxiangyu/Documents/Samples/test.webm");
-    isPlaying = true;
-    playerController->SetDisplayView(ui->openGLWidget);
+}
+
+void MainWindow::dragEnterEvent(QDragEnterEvent *event) {
+    event->acceptProposedAction();
+}
+
+void MainWindow::dropEvent(QDropEvent *event) {
+    QList<QUrl> urls = event->mimeData()->urls();
+    if(urls.isEmpty()) {
+        return;
+    }
+    QString fileName = urls.first().toLocalFile();
+    if(fileName.isEmpty()) {
+        return;
+    }
+    qDebug() << "laod file = " << fileName;
+    if (isPlaying) {
+        playerController->Stop();
+        delete playerController;
+        playerController = nullptr;
+    }
+    if (!playerController) {
+        playerController = new PlayerController();
+        playerController->SetDisplayView(ui->openGLWidget);
+        playerController->Start(fileName.toStdString());
+        isPlaying = true;
+    }
 }
 
 MainWindow::~MainWindow()
