@@ -9,6 +9,25 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Widgets)
+if(QT_VERSION_MAJOR EQUAL 6)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets OpenGLWidgets Multimedia)
+set(QT_DEPS_LIBS
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::OpenGLWidgets
+    Qt${QT_VERSION_MAJOR}::Multimedia
+    )
+else()
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets OpenGL Multimedia)
+set(QT_DEPS_LIBS
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::OpenGL
+    Qt${QT_VERSION_MAJOR}::Multimedia
+    )
+endif()
+
+message("QT${QT_VERSION_MAJOR} version = ${QT_VERSION}")
+
 set(ROOT_PATH ../..)
 message("Project root path = ${ROOT_PATH}")
 
@@ -202,13 +221,16 @@ set(PROJECT_SOURCES
 
 include_directories(${CMAKE_SOURCE_DIR})
 
-find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets OpenGLWidgets Multimedia)
-
-qt_add_executable(zplayer_demo
-    MANUAL_FINALIZATION
-    ${PROJECT_SOURCES}
-)
+if(QT_VERSION_MAJOR EQUAL 6)
+    qt_add_executable(zplayer_demo
+        MANUAL_FINALIZATION
+        ${PROJECT_SOURCES}
+    )
+else()
+    add_executable(zplayer_demo
+        ${PROJECT_SOURCES}
+    )
+endif()
 
 ## macOS deps libs
 
@@ -228,18 +250,14 @@ set(ZPLAYER_DEPS_LIBS
 )
 
 target_link_libraries(zplayer PRIVATE
-    Qt${QT_VERSION_MAJOR}::Widgets
-    Qt${QT_VERSION_MAJOR}::OpenGLWidgets
-    Qt${QT_VERSION_MAJOR}::Multimedia
+    ${QT_DEPS_LIBS}
     ${ffmpeg_static_libs}
     yuv_static
     ${ZPLAYER_DEPS_LIBS}
 )
 
 target_link_libraries(zplayer_demo PRIVATE
-    Qt${QT_VERSION_MAJOR}::Widgets
-    Qt${QT_VERSION_MAJOR}::OpenGLWidgets
-    Qt${QT_VERSION_MAJOR}::Multimedia
+    ${QT_DEPS_LIBS}
     zplayer
 )
 
