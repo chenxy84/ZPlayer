@@ -174,43 +174,51 @@ add_library(yuv_static
 #         player_sdl_static
 #         )
 
-set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
-        player_controller.cpp
-        player_controller.h
-        video_gl_widget.cpp
-        video_gl_widget.h
-        IJKMediaPlayer/ijkplayer_controller.cc
-        IJKMediaPlayer/ijkplayer_controller.h
+
+set(ZPLAYER_SOURCE
+    ZPlayer/zplayer_global.h
+    ZPlayer/player_controller.cpp
+    ZPlayer/player_controller.h
+    ZPlayer/video_gl_widget.cpp
+    ZPlayer/video_gl_widget.h
+    IJKMediaPlayer/ijkplayer_controller.cc
+    IJKMediaPlayer/ijkplayer_controller.h
 )
 
-include_directories(${CMAKE_SOURCE_DIR})
-
-find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Widgets OpenGLWidgets Multimedia)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets OpenGLWidgets Multimedia)
-
-qt_add_executable(zplayer
-    MANUAL_FINALIZATION
-    ${PROJECT_SOURCES}
+add_library(zplayer SHARED
+    ${ZPLAYER_SOURCE}
     ${SOURCE_IJK_MEDIA}
     ${SOURCE_IJK_MEDIA_QT}
     ${SOURCE_IJK_SDL}
     ${SOURCE_IJK_SDL_QT}
 )
 
-# qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+set(PROJECT_SOURCES
+    PlayerDemo/main.cpp
+    PlayerDemo/mainwindow.cpp
+    PlayerDemo/mainwindow.h
+    PlayerDemo/mainwindow.ui
+)
+
+include_directories(${CMAKE_SOURCE_DIR})
+
+find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets OpenGLWidgets Multimedia)
+
+qt_add_executable(zplayer_demo
+    MANUAL_FINALIZATION
+    ${PROJECT_SOURCES}
+)
 
 ## macOS deps libs
 
-set(DEPS_LIBS 
+set(ZPLAYER_DEPS_LIBS
     iconv 
     m 
     dl 
     pthread
     z
+    bz2
     "-framework AVFoundation"
     "-framework VideoToolbox" 
     "-framework CoreFoundation" 
@@ -219,33 +227,41 @@ set(DEPS_LIBS
     "-framework CoreServices"
 )
 
-target_link_libraries(zplayer PRIVATE 
-    Qt${QT_VERSION_MAJOR}::Widgets  
+target_link_libraries(zplayer PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::OpenGLWidgets
     Qt${QT_VERSION_MAJOR}::Multimedia
     ${ffmpeg_static_libs}
     yuv_static
-    ${DEPS_LIBS}
-    )
+    ${ZPLAYER_DEPS_LIBS}
+)
 
-set(MACOSX_BUNDLE_GUI_IDENTIFIER zplayer.sdk.someone.vip)
+target_link_libraries(zplayer_demo PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::OpenGLWidgets
+    Qt${QT_VERSION_MAJOR}::Multimedia
+    zplayer
+)
+
+
+set(MACOSX_BUNDLE_GUI_IDENTIFIER zplayer_demo.sdk.someone.vip)
 set(MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION})
 set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR})
-set(MACOSX_BUNDLE_NAME ZPlayer)
+set(MACOSX_BUNDLE_NAME ZPlayerDemo)
 
-set_target_properties(zplayer PROPERTIES
+set_target_properties(zplayer_demo PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER ${MACOSX_BUNDLE_GUI_IDENTIFIER}
     MACOSX_BUNDLE_BUNDLE_VERSION ${MACOSX_BUNDLE_BUNDLE_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${MACOSX_BUNDLE_SHORT_VERSION_STRING}
-    MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/Info.plist.in
+    MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/PlayerDemo/Info.plist.in
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE FALSE
 )
 
-install(TARGETS zplayer
+install(TARGETS zplayer_demo
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(zplayer)
+    qt_finalize_executable(zplayer_demo)
 endif()

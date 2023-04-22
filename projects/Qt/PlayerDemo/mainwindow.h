@@ -2,8 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "player_controller.h"
-#include "video_gl_widget.h"
+#include "ZPlayer/player_controller.h"
+#include "ZPlayer/video_gl_widget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

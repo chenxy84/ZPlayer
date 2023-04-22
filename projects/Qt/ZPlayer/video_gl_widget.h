@@ -1,12 +1,13 @@
 #ifndef OPENGLDISPLAY_H
 #define OPENGLDISPLAY_H
 
+#include "zplayer_global.h"
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 #include <QScopedPointer>
 #include <QException>
 
-class OpenGLDisplay : public QOpenGLWidget, public QOpenGLFunctions
+class ZPLAYER_EXPORT OpenGLDisplay : public QOpenGLWidget, public QOpenGLFunctions
 {
 public:
     explicit OpenGLDisplay(QWidget* parent = nullptr);

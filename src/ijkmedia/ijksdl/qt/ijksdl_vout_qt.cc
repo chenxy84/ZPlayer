@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 #include <QDebug>
-#include "video_gl_widget.h"
+#include "ZPlayer/video_gl_widget.h"
 
 typedef struct SDL_VoutSurface_Opaque {
     SDL_Vout *vout;

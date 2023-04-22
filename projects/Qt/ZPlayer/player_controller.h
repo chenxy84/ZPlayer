@@ -1,11 +1,11 @@
 #ifndef PLAYERCONTROLLER_H
 #define PLAYERCONTROLLER_H
 
+#include "zplayer_global.h"
 #include <QObject>
-
 #include "IJKMediaPlayer/ijkplayer_controller.h"
 
-class PlayerController : public QObject
+class ZPLAYER_EXPORT PlayerController : public QObject
 {
     Q_OBJECT
 public:
