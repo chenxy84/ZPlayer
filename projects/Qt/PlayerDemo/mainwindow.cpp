@@ -28,7 +28,7 @@ void MainWindow::dropEvent(QDropEvent *event) {
         return;
     }
     qDebug() << "laod file = " << fileName;
-    if (isPlaying) {
+    if (isPlaying && playerController) {
         playerController->Stop();
         delete playerController;
         playerController = nullptr;
@@ -44,8 +44,10 @@ void MainWindow::dropEvent(QDropEvent *event) {
 
 MainWindow::~MainWindow()
 {
-    playerController->SetDisplayView(NULL);
-    delete ui;
+    if(playerController) {
+        playerController->SetDisplayView(NULL);
+        delete ui;
+    }
 }
 
 void MainWindow::StartButtonClick() {

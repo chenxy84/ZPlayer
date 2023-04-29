@@ -13,7 +13,11 @@ SDL_Aout *SDL_Aout_Qt_Create();
 
 #ifdef __cplusplus
 #include <math.h>
+
+
+//#include <QAudioOutput>
 #include <QAudioSink>
+
 #include <QByteArray>
 #include <QComboBox>
 #include <QIODevice>
