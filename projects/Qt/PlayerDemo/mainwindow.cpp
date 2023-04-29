@@ -27,7 +27,7 @@ void MainWindow::dropEvent(QDropEvent *event) {
     if(fileName.isEmpty()) {
         return;
     }
-    qDebug() << "laod file = " << fileName;
+    //qDebug() << "laod file = " << fileName;
     if (isPlaying && playerController) {
         playerController->Stop();
         delete playerController;

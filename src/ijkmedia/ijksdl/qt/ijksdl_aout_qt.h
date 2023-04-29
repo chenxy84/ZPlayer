@@ -14,9 +14,18 @@ SDL_Aout *SDL_Aout_Qt_Create();
 #ifdef __cplusplus
 #include <math.h>
 
+#include <QtGlobal>
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+#define QT6
+#endif
 
-//#include <QAudioOutput>
+#if defined(QT6)
 #include <QAudioSink>
+#include <QMediaDevices>
+#include <QAudioOutput>
+#else
+#include <QAudioOutput>
+#endif
 
 #include <QByteArray>
 #include <QComboBox>
@@ -28,8 +37,8 @@ SDL_Aout *SDL_Aout_Qt_Create();
 #include <QSlider>
 #include <QTimer>
 #include <QScopedPointer>
-#include <QMediaDevices>
 #include <QThread>
+
 class AudioDataProvider: public QIODevice
 {
     Q_OBJECT

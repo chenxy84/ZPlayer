@@ -11,28 +11,26 @@ extern "C" {
 }
 #endif
 
-
 #include <stdbool.h>
 #include <assert.h>
-#include <QThread>
-
-// #import "IJKSDLAudioUnitController.h"
-// #import "IJKSDLAudioQueueController.h"
 
 #define SDL_QT_AUDIO_MAX_CALLBACKS_PER_SEC 20
 
 struct SDL_Aout_Opaque {
-    //IJKSDLAudioQueueController *aoutController;
     SDL_cond   *wakeup_cond;
     SDL_mutex  *wakeup_mutex;
     
     QThread *thread;
-    QAudioDevice *device;
-    
     SDL_AudioSpec spec;
-    //ADD Qt Audio
+    
+#if defined(QT6)
+    QAudioDevice *device;
     QMediaDevices *devices;
     QAudioSink *audio;
+#else
+    QAudioOutput *audio;
+#endif
+    
     QIODevice *io;
     uint8_t *buffer;
     size_t buffer_size;
@@ -171,18 +169,27 @@ static int aout_open_audio(SDL_Aout *aout, const SDL_AudioSpec *desired, SDL_Aud
 //        ALOGE("aout_open_audio_n: failed to new AudioTrcak()");
 //        return -1;
 //    }
+    QAudioFormat fmt;
     
+#if defined(QT6)
     opaque->devices = new QMediaDevices();
     const QAudioDevice &device = opaque->devices->defaultAudioOutput();
-    QAudioFormat fmt;
+    
     fmt.setSampleRate(desired->freq);
     fmt.setChannelCount(desired->channels);
     fmt.setSampleFormat(QAudioFormat::SampleFormat::Int16);
+
+#else
+    QAudioDeviceInfo device = QAudioDeviceInfo::defaultOutputDevice();
+    fmt.setSampleRate(desired->freq);
+    fmt.setChannelCount(desired->channels);
+    fmt.setSampleSize(16);
+    fmt.setCodec("audio/pcm");
+    fmt.setByteOrder(QAudioFormat::LittleEndian);
+    fmt.setSampleType(QAudioFormat::SignedInt);
     
-    QString desc = device.description();
-    QAudioFormat devicePreferredFormat = device.preferredFormat();
-    
-    
+#endif
+
     if(device.isFormatSupported(fmt)) {
         
         if (obtained) {
@@ -191,7 +198,6 @@ static int aout_open_audio(SDL_Aout *aout, const SDL_AudioSpec *desired, SDL_Aud
             obtained->format = AUDIO_S16SYS;
         }
         
-//        opaque->audio = new QAudioSink(device, fmt);
 //        opaque->provider = new AudioDataProvider(fmt, 1000000, 600);
 //        opaque->provider->start();
 //
@@ -205,19 +211,14 @@ static int aout_open_audio(SDL_Aout *aout, const SDL_AudioSpec *desired, SDL_Aud
         
         opaque->thread = new MyAudioThread(aout, fmt);
         opaque->thread->start();
+   
+        opaque->pause_on = 1;
+        opaque->abort_request = 0;
         
-//        opaque->io = new QIODevice();
+    } else {
         
-//
     }
     
-    opaque->pause_on = 1;
-    opaque->abort_request = 0;
-    
-
-    
-    
-
 //    opaque->buffer_size = SDL_Android_AudioTrack_get_min_buffer_size(opaque->atrack);
 //    if (opaque->buffer_size <= 0) {
 //        ALOGE("aout_open_audio_n: failed to getMinBufferSize()");
@@ -365,7 +366,7 @@ void AudioDataProvider::stop()
 
 void AudioDataProvider::generateData(const QAudioFormat &format, qint64 durationUs, int sampleRate)
 {
-    const int channelBytes = format.bytesPerSample();
+    const int channelBytes = format.bytesPerFrame();
     const int sampleBytes = format.channelCount() * channelBytes;
     qint64 length = format.bytesForDuration(durationUs);
     Q_ASSERT(length % sampleBytes == 0);
@@ -375,31 +376,31 @@ void AudioDataProvider::generateData(const QAudioFormat &format, qint64 duration
     unsigned char *ptr = reinterpret_cast<unsigned char *>(m_buffer.data());
     int sampleIndex = 0;
 
-    while (length) {
-        // Produces value (-1..1)
-        const qreal x = qSin(2 * M_PI * sampleRate * qreal(sampleIndex++ % format.sampleRate()) / format.sampleRate());
-        for (int i=0; i<format.channelCount(); ++i) {
-            switch(format.sampleFormat()) {
-            case QAudioFormat::UInt8:
-                *reinterpret_cast<quint8 *>(ptr) = static_cast<quint8>((1.0 + x) / 2 * 255);
-                break;
-            case QAudioFormat::Int16:
-                *reinterpret_cast<qint16 *>(ptr) = static_cast<qint16>(x * 32767);
-                break;
-            case QAudioFormat::Int32:
-                *reinterpret_cast<qint32 *>(ptr) = static_cast<qint32>(x * std::numeric_limits<qint32>::max());
-                break;
-            case QAudioFormat::Float:
-                *reinterpret_cast<float *>(ptr) = x;
-                break;
-            default:
-                break;
-            }
-
-            ptr += channelBytes;
-            length -= channelBytes;
-        }
-    }
+//    while (length) {
+//        // Produces value (-1..1)
+//        const qreal x = qSin(2 * M_PI * sampleRate * qreal(sampleIndex++ % format.sampleRate()) / format.sampleRate());
+//        for (int i=0; i<format.channelCount(); ++i) {
+//            switch(format.sampleFormat()) {
+//            case QAudioFormat::UInt8:
+//                *reinterpret_cast<quint8 *>(ptr) = static_cast<quint8>((1.0 + x) / 2 * 255);
+//                break;
+//            case QAudioFormat::Int16:
+//                *reinterpret_cast<qint16 *>(ptr) = static_cast<qint16>(x * 32767);
+//                break;
+//            case QAudioFormat::Int32:
+//                *reinterpret_cast<qint32 *>(ptr) = static_cast<qint32>(x * std::numeric_limits<qint32>::max());
+//                break;
+//            case QAudioFormat::Float:
+//                *reinterpret_cast<float *>(ptr) = x;
+//                break;
+//            default:
+//                break;
+//            }
+//
+//            ptr += channelBytes;
+//            length -= channelBytes;
+//        }
+//    }
 }
 
 qint64 AudioDataProvider::readData(char *data, qint64 len)
@@ -441,11 +442,15 @@ void MyAudioThread::run() {
     
     SDL_Aout *aout = (SDL_Aout *)aout_;
     SDL_Aout_Opaque *opaque = aout->opaque;
+#if defined(QT6)
     const QAudioDevice &device = opaque->devices->defaultAudioOutput();
     opaque->audio = new QAudioSink(device, format_);
+#else
+    opaque->audio = new QAudioOutput(format_);
+#endif
     
     opaque->buffer_size = 4096;
-    opaque->audio->setBufferSize(opaque->buffer_size);
+    opaque->audio->setBufferSize((int)opaque->buffer_size);
 
     //opaque->audio->start(opaque->provider);
     opaque->io = opaque->audio->start();
@@ -508,7 +513,7 @@ void MyAudioThread::run() {
         
         copy_size = opaque->audio->bytesFree();
         //printf("status = %d, copy size = %lld \n", opaque->audio->state(), copy_size);
-        audio_cblk(userdata, buffer, copy_size);
+        audio_cblk(userdata, buffer, (int)copy_size);
         if (opaque->need_flush) {
 //            SDL_Android_AudioTrack_flush(env, atrack);
             opaque->need_flush = false;
