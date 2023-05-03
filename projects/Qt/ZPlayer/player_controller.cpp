@@ -1,5 +1,6 @@
 #include "player_controller.h"
 #include <iostream>
+#include "IJKMediaPlayer/ijkplayer_controller.h"
 
 PlayerController::PlayerController(QObject *parent)
     : QObject{parent}
@@ -7,9 +8,9 @@ PlayerController::PlayerController(QObject *parent)
     mpc_ = new IJKMediaPlayerController();
 }
 
-PlayerController::~PlayerController() {
-
-}
+//PlayerController::~PlayerController() {
+//    delete mpc_;
+//}
 
 void PlayerController::Start(std::string url) {
     mpc_->SetSource(url);

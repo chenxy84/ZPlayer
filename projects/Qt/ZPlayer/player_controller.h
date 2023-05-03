@@ -3,14 +3,14 @@
 
 #include "zplayer_global.h"
 #include <QObject>
-#include "IJKMediaPlayer/ijkplayer_controller.h"
+class IJKMediaPlayerController;
 
 class ZPLAYER_EXPORT PlayerController : public QObject
 {
     Q_OBJECT
 public:
     explicit PlayerController(QObject *parent = nullptr);
-    virtual ~PlayerController();
+//    ~PlayerController();
 
 
 public:

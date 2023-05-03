@@ -26,6 +26,9 @@ public slots:
     void StartButtonClick();
 
 private:
+    
+    void startPlay(std::string url, void *view);
+    
     Ui::MainWindow *ui;
     PlayerController *playerController;
     
