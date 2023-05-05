@@ -1,26 +1,15 @@
 package tv.danmaku.ijk.media.player.widget;
 
 import android.content.Context;
-import android.net.Uri;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Surface;
-import android.widget.FrameLayout;
-
-import com.aliyun.player.IPlayer;
-import com.aliyun.player.nativeclass.CacheConfig;
-import com.aliyun.player.nativeclass.MediaInfo;
-import com.aliyun.player.nativeclass.PlayerConfig;
-import com.aliyun.player.nativeclass.TrackInfo;
-import com.aliyun.player.source.UrlSource;
-
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.util.Arrays;
 
-import tv.danmaku.ijk.media.player.BuildConfig;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkTimedText;
@@ -125,8 +114,8 @@ public class IjkVideoView extends AbstractPlayerView {
      *
      * @param surfaceType Surface的类型
      */
-    public void setSurfaceType(AliyunRenderView.SurfaceType surfaceType) {
-        if (surfaceType == AliyunRenderView.SurfaceType.TEXTURE_VIEW && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)) {
+    public void setSurfaceType(int surfaceType) {
+        if (surfaceType == 0 && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)) {
             mIRenderView = new TextureRenderView(mContext);
         } else {
             mIRenderView = new IJKSurfaceRenderView(mContext);
@@ -176,20 +165,6 @@ public class IjkVideoView extends AbstractPlayerView {
     /**
      * 设置播放源
      */
-    public void setDataSource(Uri uri) {
-//        if (mPlayer != null) {
-//            try {
-//                mPlayer.setDataSource(mContext, uri);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-        this.setDataSource(uri.toString());
-    }
-
-    /**
-     * 设置播放源
-     */
     public void setDataSource(String uri) {
         if (mPlayer != null) {
             try {
@@ -199,20 +174,6 @@ public class IjkVideoView extends AbstractPlayerView {
                 e.printStackTrace();
             }
         }
-    }
-
-    /**
-     * 设置播放源
-     */
-    public void setDataSource(UrlSource urlSource) {
-//        if (mPlayer != null) {
-//            try {
-//                mPlayer.setDataSource(urlSource.getUri());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-        this.setDataSource(urlSource.getUri());
     }
 
     /**
@@ -417,7 +378,7 @@ public class IjkVideoView extends AbstractPlayerView {
      * 获取当前 track
      */
     @Deprecated
-    public TrackInfo currentTrack(int ordinal) {
+    public MediaPlayer.TrackInfo currentTrack(int ordinal) {
 //        if (mAliPlayer != null) {
 //            return mAliPlayer.currentTrack(ordinal);
 //        }
@@ -448,119 +409,6 @@ public class IjkVideoView extends AbstractPlayerView {
         } else {
             return 0l;
         }
-    }
-
-    /**
-     * 缓存配置
-     */
-    public void setCacheConfig(CacheConfig cacheConfig) {
-//        if (mAliPlayer != null) {
-//            mAliPlayer.setCacheConfig(cacheConfig);
-//        }
-    }
-
-    /**
-     * 设置PlayerConfig
-     */
-    public void setPlayerConfig(PlayerConfig playerConfig) {
-//        if (mAliPlayer != null) {
-//            mAliPlayer.setConfig(playerConfig);
-//        }
-    }
-
-    /**
-     * 获取PlayerConfig
-     */
-    public PlayerConfig getPlayerConfig() {
-//        if (mAliPlayer != null) {
-//            return mAliPlayer.getConfig();
-//        }
-        return null;
-    }
-
-    /**
-     * 设置缩放模式
-     */
-    public void setScaleModel(IPlayer.ScaleMode scaleMode) {
-//        if (mAliPlayer != null) {
-//            mAliPlayer.setScaleMode(scaleMode);
-//        }
-    }
-
-    /**
-     * 获取当前缩放模式
-     */
-    public IPlayer.ScaleMode getScaleModel() {
-//        if (mAliPlayer != null) {
-//            return mAliPlayer.getScaleMode();
-//        }
-        return IPlayer.ScaleMode.SCALE_ASPECT_FIT;
-    }
-
-    /**
-     * 设置旋转模式
-     */
-    public void setRotateModel(IPlayer.RotateMode rotateModel) {
-//        if (mAliPlayer != null) {
-//            mAliPlayer.setRotateMode(rotateModel);
-//        }
-    }
-
-    /**
-     * 获取当前旋转模式
-     */
-    public IPlayer.RotateMode getRotateModel() {
-//        if (mAliPlayer != null) {
-//            return mAliPlayer.getRotateMode();
-//        }
-        return IPlayer.RotateMode.ROTATE_0;
-    }
-
-    /**
-     * 设置镜像模式
-     */
-    public void setMirrorMode(IPlayer.MirrorMode mirrorMode) {
-//        if (mAliPlayer != null) {
-//            mAliPlayer.setMirrorMode(mirrorMode);
-//        }
-    }
-
-    /**
-     * 获取当前镜像模式
-     */
-    public IPlayer.MirrorMode getMirrorMode() {
-//        if (mAliPlayer != null) {
-//            return mAliPlayer.getMirrorMode();
-//        }
-        return IPlayer.MirrorMode.MIRROR_MODE_NONE;
-    }
-
-    public MediaInfo getMediaInfo() {
-//        if (mAliPlayer != null) {
-//            return mAliPlayer.getMediaInfo();
-//        }
-        return null;
-    }
-
-    /**
-     * 软硬解开关
-     *
-     * @param enableHardwareDecoder true:硬解,false:软解
-     */
-    public void enableHardwareDecoder(boolean enableHardwareDecoder) {
-//        if (mAliPlayer != null) {
-//            mCurrentEnableHardwareDecoder = enableHardwareDecoder;
-//            mAliPlayer.enableHardwareDecoder(enableHardwareDecoder);
-//        }
-    }
-
-    /**
-     * 获取当前解码状态
-     *
-     * @return true:硬解,false:软解
-     */
-    public boolean isHardwareDecoder() {
-        return mCurrentEnableHardwareDecoder;
     }
 
     public void release() {

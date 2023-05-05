@@ -42,15 +42,6 @@
             android:name=".VideoActivity"
             android:exported="false">
         </activity>
-
-        <meta-data
-            android:name="com.aliyun.alivc_license.licensekey"
-            android:value="8oQytg7NrBge10iFO82414396c395423698380133a5e679f9" />
-
-        <meta-data
-            android:name="com.aliyun.alivc_license.licensefile"
-            android:value="assets/license.crt" />
-
     </application>
 
 </manifest>

@@ -17,7 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
-import vip.someone.sdk.playerapp.ui.theme.Tango_playerTheme
+import vip.someone.sdk.playerapp.ui.theme.ZPlayerTheme
 
 data class Video(val name: String, val url: String)
 
@@ -28,8 +28,6 @@ val videos = listOf(
     Video("","/sdcard/Samples/test1.mp4"),
     Video("","/sdcard/Samples/test1.webm"),
     Video("","/sdcard/Samples/test_dolby_vision.mp4"),
-    Video("", "/sdcard/Samples/4035d397-17db85911c1.mov"),
-    Video("", "/sdcard/Samples/179d548b-17b9a44c6eb.mp4")
 )
 
 class MainActivity : ComponentActivity() {
@@ -63,7 +61,7 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
         setContent {
-            Tango_playerTheme {
+            ZPlayerTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     //modifier = Modifier.fillMaxSize(),

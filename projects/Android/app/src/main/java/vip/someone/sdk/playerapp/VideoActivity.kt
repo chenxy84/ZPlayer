@@ -11,9 +11,6 @@ import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.contains
-import com.aliyun.player.IPlayer
-import com.aliyun.player.bean.InfoCode
-import com.aliyun.player.source.UrlSource
 import vip.someone.sdk.playerapp.util.HardwareInfoUtils
 import tv.danmaku.ijk.media.player.IMediaPlayer
 import tv.danmaku.ijk.media.player.IMediaPlayer.OnPreparedListener
@@ -29,7 +26,6 @@ class VideoActivity : AppCompatActivity() {
     val TAG = "VideoActivity"
     val infoUtil = HardwareInfoUtils()
 
-    val useAliSDK = false
     var playerView: AbstractPlayerView? = null
 
     var name: String? = null
@@ -38,7 +34,6 @@ class VideoActivity : AppCompatActivity() {
     var isPlayerStarted = false
 
     lateinit var playerHolder: RelativeLayout
-    lateinit var aliyunView: AliyunRenderView
     lateinit var ijkView: IjkVideoView
 
     lateinit var timeSeekBar: SeekBar
@@ -73,7 +68,6 @@ class VideoActivity : AppCompatActivity() {
         name =  intent.getStringExtra("name")
         url = intent.getStringExtra("url")
 
-        aliyunView = AliyunRenderView(baseContext)
         ijkView = IjkVideoView(baseContext)
 
         playerHolder = findViewById(R.id.player_view_holder)
@@ -241,51 +235,13 @@ class VideoActivity : AppCompatActivity() {
 
     fun startPlayer() {
 
-        val urlSource = UrlSource()
-        urlSource.uri = url
-
-
-        val playerConfig = aliyunView.playerConfig
-        // 更换渲染模式
-        playerConfig.mEnableVideoTunnelRender = true
-        //播放器设置网路超时时间为 15000x`ms
-        playerConfig.mNetworkTimeout = 17000
-        // 设置超时重试次数
-        playerConfig.mNetworkRetryCount = 3
-        // 配置起播缓冲区时长s
-        playerConfig.mStartBufferDuration = 1500
-        // 配置最大缓冲区时长s
-        playerConfig.mMaxBufferDuration = 50000
-        aliyunView.playerConfig = playerConfig
-
-        aliyunView.setOnPreparedListener(IPlayer.OnPreparedListener {
-            //Log.d(TAG, "totalDuration: ${aliyunView.aliPlayer.duration}" )
-            totalDuration = aliyunView.aliPlayer.duration
-        })
-
-        aliyunView.setOnInfoListener(IPlayer.OnInfoListener {
-            when(it.code) {
-                InfoCode.CurrentPosition -> {
-                    //Log.d(TAG, "CurrentPosition: ${it.extraValue}" )
-                    updateSeekBarProgress(it.extraValue)
-                }
-                else -> {
-
-                }
-            }
-        })
-
         ijkView.setOnPreparedListener(OnPreparedListener {
-            //Log.d(TAG, "totalDuration: ${ijkView.duration}" )
             totalDuration = ijkView.duration
         })
 
         ijkView.setOnInfoListener(IMediaPlayer.OnInfoListener { _, what, extra ->
             when(what) {
-//                IMediaPlayer.MEDIA_INFO_MEDIA_CURRENT_POSITION -> {
-//                    Log.d(TAG, "SEEK_TEST CurrentPosition: $extra" )
-//                    updateSeekBarProgress(extra.toLong())
-//                }
+
             }
             true
          })
@@ -296,34 +252,20 @@ class VideoActivity : AppCompatActivity() {
         }
 
 
-        if(useAliSDK) {
-            playerView = aliyunView
-        } else {
-            playerView = ijkView
-        }
+        playerView = ijkView
+        
 
         playerHolder.addView(playerView,
             RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.MATCH_PARENT))
 
-        //        playerHolder.addView(playerView, 2160, 1215)
-
-        playerView?.setSurfaceType(AliyunRenderView.SurfaceType.TEXTURE_VIEW)
-        playerView?.setDataSource(urlSource)
+        playerView?.setSurfaceType(0)
+        playerView?.setDataSource(url)
 
         playerView?.setAutoPlay(true)
         playerView?.setLoop(true)
         playerView?.prepare()
-
-
-//        val progressBar = ProgressBar(baseContext, null,     Attr.ProgetprogressBarStyleHorizontal)
-//        progressBar.min = 0
-//        progressBar.max = 100
-//        progressBar.progress = 50
-//        progressBar.
-//        playerView?.addView(progressBar)
-
 
         Log.d(TAG, "playerView prepare url $url")
     }

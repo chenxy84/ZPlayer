@@ -77,7 +77,6 @@ dependencies {
 
     implementation files('../../../../third-party-libs/projects/android/ffmpeg/library/build/outputs/aar/library-release.aar')
 
-    implementation 'com.aliyun.sdk.android:AliyunPlayer:5.4.8.0-full'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"

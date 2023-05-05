@@ -3,8 +3,6 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
-        maven { url "http://maven.aliyun.com/nexus/content/repositories/releases"
-            allowInsecureProtocol = true}
     }
 }
 dependencyResolutionManagement {
@@ -12,8 +10,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url "http://maven.aliyun.com/nexus/content/repositories/releases"
-            allowInsecureProtocol = true}
     }
 }
 rootProject.name = "zplayer"

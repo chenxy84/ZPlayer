@@ -7,7 +7,6 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.aliyun.player.source.UrlSource;
 import tv.danmaku.ijk.media.player.PlayerQosInfo;
 
 public abstract class AbstractPlayerView extends FrameLayout {
@@ -25,8 +24,8 @@ public abstract class AbstractPlayerView extends FrameLayout {
     }
 
 
-    public abstract void setSurfaceType(AliyunRenderView.SurfaceType surfaceType);
-    public abstract void setDataSource(UrlSource urlSource);
+    public abstract void setSurfaceType(int surfaceType);
+    public abstract void setDataSource(String urlSource);
     public abstract void setAutoPlay(boolean isAutoPlay);
     public abstract void prepare();
     public abstract void start();
